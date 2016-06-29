@@ -11,7 +11,5 @@ def keyboard(request):
 def answer(request):
 
     return JsonResponse({
-        "message" : {
-            "text" : "메뉴를 준비중입니다"
-        }
+        "text" : "메뉴를 준비중입니다"
     })
