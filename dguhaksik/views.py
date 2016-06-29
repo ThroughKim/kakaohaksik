@@ -14,9 +14,7 @@ def answer(request):
     #cafeteria_name = request.POST.get("content")
 
     return JsonResponse({
-        'message' : {
-            'text' : '메뉴를 준비중입니다.'
-        }
+        'text' : '준비중입니다.'
     })
 
 
