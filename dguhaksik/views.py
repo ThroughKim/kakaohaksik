@@ -12,11 +12,15 @@ def keyboard(request):
 
 @csrf_exempt
 def answer(request):
-    received_json_data = json.loads(request.body)
+    json_str = ((request.body).decode('utf-8'))
+    received_json_data = json.loads(json_str)
+    cafeteria_name = received_json_data['content']
+    print(cafeteria_name)
+    print(cafeteria_name.type)
 
     return JsonResponse({
         'message' : {
-            'text' : received_json_data
+            'text' : '준비중입니다.'
         }
     })
 
@@ -27,4 +31,4 @@ def friend(request):
 
     })
 
-#curl -XPOST 'https://127.0.0.1/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "차량번호등록"}'
+#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "차량번호등록"}'
