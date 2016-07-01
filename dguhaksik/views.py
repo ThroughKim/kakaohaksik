@@ -16,11 +16,10 @@ def answer(request):
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
     print(cafeteria_name)
-    print(cafeteria_name.type)
 
     return JsonResponse({
         'message' : {
-            'text' : '준비중입니다.'
+            'text' : cafeteria_name
         }
     })
 
