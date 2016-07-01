@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+import json
 
 # Create your views here.
 def keyboard(request):
@@ -11,10 +12,11 @@ def keyboard(request):
 
 @csrf_exempt
 def answer(request):
+    received_json_data = json.loads(request.body)
 
     return JsonResponse({
         'message' : {
-            'text' : '준비중입니다.'
+            'text' : received_json_data
         }
     })
 
