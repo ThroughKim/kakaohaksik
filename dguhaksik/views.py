@@ -18,5 +18,10 @@ def answer(request):
         }
     })
 
+def friends(request):
+
+    return JsonResponse({
+
+    })
 
 #curl -XPOST 'https://127.0.0.1/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "차량번호등록"}'
