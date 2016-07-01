@@ -15,11 +15,10 @@ def answer(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
-    print(cafeteria_name)
 
     return JsonResponse({
         'message' : {
-            'text' : cafeteria_name
+            'text' : cafeteria_name + '의 메뉴입니다 /r/n 준비중입니다.'
         }
     })
 
