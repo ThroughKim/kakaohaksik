@@ -19,6 +19,10 @@ def answer(request):
     return JsonResponse({
         'message' : {
             'text' : cafeteria_name + '의 메뉴입니다 \r\n 준비중입니다.'
+        },
+        'keyboard' : {
+            'type' : 'buttons',
+            'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
         }
     })
 
