@@ -18,6 +18,7 @@ def answer(request):
         }
     })
 
+@csrf_exempt
 def friend(request):
 
     return JsonResponse({
