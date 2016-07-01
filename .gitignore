@@ -1,4 +1,5 @@
 *.pot
+*.cpython-34.pyc
 *.py[co]
 __pycache__
 *.pyc
