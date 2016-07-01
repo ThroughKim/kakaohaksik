@@ -18,7 +18,7 @@ def answer(request):
 
     return JsonResponse({
         'message' : {
-            'text' : cafeteria_name + '의 메뉴입니다 \r\n 준비중입니다.'
+            'text' : cafeteria_name + '의 메뉴입니다 \n 준비중입니다.'
         },
         'keyboard' : {
             'type' : 'buttons',
