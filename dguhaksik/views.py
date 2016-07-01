@@ -6,15 +6,16 @@ def keyboard(request):
 
     return JsonResponse({
         'type' : 'buttons',
-        'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']})
+        'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+    })
 
 @csrf_exempt
 def answer(request):
 
-    #cafeteria_name = request.POST.get("content")
-
     return JsonResponse({
-        'text' : '준비중입니다.'
+        'message' : {
+            'text' : '준비중입니다.'
+        }
     })
 
 
