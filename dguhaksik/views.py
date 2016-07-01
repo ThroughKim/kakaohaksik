@@ -18,7 +18,7 @@ def answer(request):
         }
     })
 
-def friends(request):
+def friend(request):
 
     return JsonResponse({
 

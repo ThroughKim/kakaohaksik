@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^keyboard/', 'dguhaksik.views.keyboard'),
     url(r'^message/', 'dguhaksik.views.answer'),
-    url(r'^friends/', 'dguhaksik.views.friends'),
+    url(r'^friend/', 'dguhaksik.views.friend'),
 ]
