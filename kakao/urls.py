@@ -13,16 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from rest_framework import routers
+from django.conf.urls import url
 
-router = routers.DefaultRouter()
-
-# 우리가 만든 API를 자동으로 라우팅합니다.
-# 그리고 API 탐색을 위해 로그인 URL을 추가했습니다.
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^keyboard/', 'dguhaksik.views.keyboard'),
     url(r'^message', 'dguhaksik.views.answer'),
     url(r'^friend', 'dguhaksik.views.friend'),
