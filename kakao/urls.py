@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^keyboard/', 'dguhaksik.views.keyboard'),
     url(r'^message', 'dguhaksik.views.answer'),
     url(r'^friend', 'dguhaksik.views.friend'),
+    url(r'^crawl/', 'dguhaksik.views.crawl'),
 ]
