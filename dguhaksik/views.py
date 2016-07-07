@@ -22,22 +22,23 @@ def answer(request):
     if cafeteria_name == '상록원':
         return JsonResponse({
             'message':{
-                text:'상록원'
+                'text':'상록원임'
+           }
+        })
+
+    else:
+        return JsonResponse({
+            'message' : {
+                'text' : cafeteria_name + '의 메뉴입니다 \n준비중입니다.'
+            },
+            'keyboard' : {
+                'type' : 'buttons',
+                'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
             }
         })
 
-    return JsonResponse({
-        'message' : {
-            'text' : cafeteria_name + '의 메뉴입니다 \n준비중입니다.'
-        },
-        'keyboard' : {
-            'type' : 'buttons',
-            'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
-        }
-    })
-
 def crawl(request):
-    #메뉴 테이블 비우기
+    #메뉴 DB 테이블 비우기
     flush_menu_db()
 
     #메뉴 테이블 추출
