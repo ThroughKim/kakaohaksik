@@ -19,6 +19,13 @@ def answer(request):
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
 
+    if cafeteria_name == '상록원':
+        return JsonResponse({
+            'message':{
+                text:'상록원'
+            }
+        })
+
     return JsonResponse({
         'message' : {
             'text' : cafeteria_name + '의 메뉴입니다 \n준비중입니다.'
