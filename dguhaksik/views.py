@@ -5,13 +5,14 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import json, datetime
 
-# Create your views here.
+
 def keyboard(request):
 
     return JsonResponse({
         'type' : 'buttons',
         'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
     })
+
 
 @csrf_exempt
 def answer(request):
@@ -23,7 +24,7 @@ def answer(request):
     if cafeteria_name == '상록원':
         return JsonResponse({
             'message':{
-                'text': today_date + '의 상록원 중식 메뉴입니다. \n' + get_menu('상록원')
+                'text': today_date + '의 상록원 중식 메뉴입니다. \n \n' + get_menu('상록원')
             },
             'keyboard': {
                 'type': 'buttons',
@@ -35,7 +36,7 @@ def answer(request):
     elif cafeteria_name == '그루터기':
         return JsonResponse({
             'message': {
-                'text': '그루터기'
+                'text': today_date + '의 그루터기 중식 메뉴입니다. \n \n' + get_menu('그루터기')
             },
             'keyboard': {
                 'type': 'buttons',
@@ -47,7 +48,7 @@ def answer(request):
     elif cafeteria_name == '아리수':
         return JsonResponse({
             'message': {
-                'text': '아리수'
+                'text': today_date + '의 아리수 중식 메뉴입니다. \n \n' + get_menu('아리수')
             },
             'keyboard': {
                 'type': 'buttons',
@@ -59,7 +60,7 @@ def answer(request):
     elif cafeteria_name == '기숙사식당':
         return JsonResponse({
             'message': {
-                'text': '기숙사식당'
+                'text': today_date + '의 기숙사식당 중식 메뉴입니다. \n \n' + get_menu('기숙사식당')
             },
             'keyboard': {
                 'type': 'buttons',
@@ -71,7 +72,7 @@ def answer(request):
     elif cafeteria_name == '교직원식당':
         return JsonResponse({
             'message': {
-                'text': '교직원식당'
+                'text': today_date + '의 교직원식당 중식 메뉴입니다. \n \n' + get_menu('교직원식당')
             },
             'keyboard': {
                 'type': 'buttons',
@@ -99,6 +100,35 @@ def get_menu(cafeteria_name):
                + "------------\n" + "일품코너 \n" + sang_ill \
                + "------------\n" + "양식코너 \n" + sang_yang \
                + "------------\n" + "뚝배기코너 \n" + sang_dduk
+
+    elif cafeteria_name == '그루터기':
+        gru_a = Menu.objects.get(cafe_name='A코너').menu
+        gru_b = Menu.objects.get(cafe_name='B코너').menu
+
+        return "------------\n" +  "A코너 \n" + gru_a \
+               + "------------\n" + "B코너 \n" + gru_b
+
+    elif cafeteria_name == '아리수':
+        ari = Menu.objects.get(cafe_name='아리수')
+
+        return "------------\n" + "아리수 \n" + ari
+
+    elif cafeteria_name == '기숙사식당':
+        dorm_a = Menu.objects.get(cafe_name='기숙사A코너').menu
+        dorm_b = Menu.objects.get(cafe_name='기숙사B코너').menu
+
+        return "------------\n" + "A코너 \n" + dorm_a \
+               + "------------\n" + "B코너 \n" + dorm_b
+
+    elif cafeteria_name == '교직원식당':
+        kyo_jib = Menu.objects.get(cafe_name='집밥')
+        kyo_han = Menu.objects.get(cafe_name='한그릇')
+
+        return "------------\n" + "집밥 \n" + kyo_jib \
+               + "------------\n" + "한그릇 \n" + kyo_han
+
+    else:
+        return "존재하지 않는 식당이거나 오류 발생중입니다."
 
 
 def crawl(request):
@@ -343,6 +373,7 @@ def crawl(request):
 
 
     return JsonResponse({'status' : 'crawled'})
+
 
 def flush_menu_db():
     menu_db = Menu.objects.all()
