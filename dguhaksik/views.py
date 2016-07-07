@@ -30,9 +30,10 @@ def answer(request):
     })
 
 def crawl(request):
-    today_date = datetime.date.today()
-    today_span_num = today_date.isoweekday() + 2
+    #메뉴 테이블 비우기
+    flush_menu_db()
 
+    #메뉴 테이블 추출
     html = urlopen('http://dgucoop.dongguk.edu/store/store.php?w=4&l=1')
     source = html.read()
     html.close()
@@ -40,87 +41,236 @@ def crawl(request):
     table_div = soup.find(id="sdetail")
     menu_tables = table_div.table.tr.td.p.find_all('table', {"bgcolor": "#CDD6B5"})
 
+    #식당별 테이블 지정
     kyo_table = menu_tables[0]
     sang_table = menu_tables[1]
     gru_table = menu_tables[4]
     ari_table = menu_tables[6]
     dorm_table = menu_tables[7]
 
+
+    #교직원 식당
     if kyo_table.find(text="휴무"):
         Menu.objects.create(
-            name='집밥',
+            cafe_name='집밥',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
         Menu.objects.create(
-            name='한그릇',
+            cafe_name='한그릇',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
 
     else:
-        print("메뉴")
+        kyo_trs = kyo_table.find_all('tr')
+        kyo_tables = kyo_trs[1].find_all('table')
+
+        kyo_jib_trs = kyo_tables[0].find_all('tr')
+        kyo_jib_menu = kyo_jib_trs[0].text
+        kyo_jib_price = kyo_jib_trs[1].text
+
+        kyo_han_trs = kyo_tables[1].find_all('tr')
+        kyo_han_menu = kyo_han_trs[0].text
+        kyo_han_price = kyo_han_trs[1].text
+
+        Menu.objects.create(
+            cafe_name='집밥',
+            time='중식',
+            menu=kyo_jib_menu + kyo_jib_price,
+            is_new=True
+        )
+        Menu.objects.create(
+            cafe_name='한그릇',
+            time='중식',
+            menu=kyo_han_menu + kyo_han_price,
+            is_new=True
+        )
 
 
+    #상록원
     if sang_table.find(text="휴무"):
         Menu.objects.create(
-            name='백반코너',
+            cafe_name='백반코너',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
         Menu.objects.create(
-            name='뚝배기코너',
+            cafe_name='뚝배기코너',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
         Menu.objects.create(
-            name='일품코너',
+            cafe_name='일품코너',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
         Menu.objects.create(
-            name='양식코너',
+            cafe_name='양식코너',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
 
     else:
-        print("메뉴")
+        sang_trs = sang_table.find_all('tr')
+        sang_tables = sang_trs[1].find_all('table')
 
+        sang_bek_trs = sang_tables[0].find_all('tr')
+        sang_bek_menu = sang_bek_trs[0].text
+        sang_bek_price = sang_bek_trs[1].text
+
+        sang_ill_trs = sang_tables[1].find_all('tr')
+        sang_ill_menu = sang_ill_trs[0].text
+        sang_ill_price = sang_ill_trs[1].text
+
+        sang_yang_trs = sang_tables[2].find_all('tr')
+        sang_yang_menu = sang_yang_trs[0].text
+        sang_yang_price = sang_yang_trs[1]. text
+
+        sang_dduk_trs = sang_tables[3].find_all('tr')
+        sang_dduk_menu = sang_dduk_trs[0].text
+        sang_dduk_price = sang_dduk_trs[1].text
+
+        Menu.objects.create(
+            cafe_name='백반코너',
+            time='중식',
+            menu=sang_bek_menu + sang_bek_price,
+            is_new=True
+        )
+        Menu.objects.create(
+            cafe_name='일품코너',
+            time='중식',
+            menu=sang_ill_menu + sang_ill_price,
+            is_new=True
+        )
+        Menu.objects.create(
+            cafe_name='양식코너',
+            time='중식',
+            menu=sang_yang_menu + sang_yang_price,
+            is_new=True
+        )
+        Menu.objects.create(
+            cafe_name='뚝배기코너',
+            time='중식',
+            menu=sang_dduk_menu + sang_dduk_price,
+            is_new=True
+        )
+
+
+    #그루터기
     if gru_table.find(text="휴무"):
         Menu.objects.create(
-            name='A코너',
+            cafe_name='A코너',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
         Menu.objects.create(
-            name='B코너',
+            cafe_name='B코너',
             time='중식',
-            menu='휴무'
+            menu='휴무',
+            is_new=True
         )
 
     else:
-        print("메뉴")
+        gru_trs = gru_table.find_all('tr')
+        gru_tables = gru_trs[1].find_all('tables')
+
+        gru_a_trs = gru_tables[0].find_all('tr')
+        gru_a_menu = gru_a_trs[0].text
+        gru_a_price = gru_a_trs[1].text
+
+        gru_b_trs = gru_tables[1].find_all('tr')
+        gru_b_menu = gru_b_trs[0].text
+        gru_b_price = gru_b_trs[1].text
+
+        Menu.objects.create(
+            cafe_name='A코너',
+            time='중식',
+            menu=gru_a_menu + gru_a_price,
+            is_new=True
+        )
+        Menu.objects.create(
+            cafe_name='B코너',
+            time='중식',
+            menu=gru_b_menu + gru_b_price,
+            is_new=True
+        )
 
 
+    #아리수
+    if ari_table.find(text="휴무"):
+        Menu.objects.create(
+            cafe_name='아리수',
+            time='중식',
+            menu='휴무',
+            is_new=True
+        )
 
-    """
-    sang_bek_tds = rs[8].find_all('td')
-    try:
-        sang_bek_today_spans = sang_bek_tds[today_span_num].find_all('span')
-        sang_bek_menu = sang_bek_today_spans[0].text
-        sang_bek_price = sang_bek_today_spans[1].text
-    except IndexError:
-        sang_bek_menu = "준비중입니다"
-        sang_bek_price = "준비중입니다"
 
-    Menu.objects.create(
-        name='백반코너',
-        menu=sang_bek_menu + '\r\n' + sang_bek_price
-    )
-    """
+    else:
+        ari_trs = ari_table.find_all('tr')
+        ari_tables = ari_trs[1].find_all('tables')
+        ari_trs = ari_tables[0].find_all('tr')
+        ari_menu = ari_trs[0].text
+        ari_price = ari_trs[1].text
 
-    return JsonResponse({})
+        Menu.objects.create(
+            cafe_name='아리수',
+            time='중식',
+            menu=ari_menu + ari_price,
+            is_new=True
+        )
+
+
+    #기숙사 식당
+    if dorm_table.find(text="휴무"):
+        Menu.objects.create(
+            cafe_name='기숙사A코너',
+            time='중식',
+            menu='휴무',
+            is_new=True
+        )
+        Menu.objects.create(
+            cafe_name='기숙사B코너',
+            time='중식',
+            menu='휴무',
+            is_new=True
+        )
+
+    else:
+        dorm_trs = dorm_table.find_all('tr')
+        dorm_tables = dorm_trs[5].find_all('table')
+
+        dorm_a_trs = dorm_tables[0].find_all('tr')
+        dorm_a_menu = dorm_a_trs[0].text
+        dorm_a_price = dorm_a_trs[1].text
+
+        dorm_b_trs = dorm_tables[1].find_all('tr')
+        dorm_b_menu = dorm_b_trs[0].text
+        dorm_b_price = dorm_b_trs[1].text
+
+        Menu.objects.create(
+            cafe_name='기숙사A코너',
+            time='중식',
+            menu=dorm_a_menu + dorm_a_price,
+            is_new=True
+        )
+        Menu.objects.create(
+            cafe_name='기숙사B코너',
+            time='중식',
+            menu=dorm_b_menu + dorm_b_price,
+            is_new=True
+        )
+
+
+    return JsonResponse({'status' : 'crawled'})
 
 def flush_menu_db():
     menu_db = Menu.objects.all()
