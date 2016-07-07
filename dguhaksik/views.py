@@ -23,8 +23,7 @@ def answer(request):
     if cafeteria_name == '상록원':
         return JsonResponse({
             'message':{
-                'text': today_date + '일의 상록원 중식 메뉴입니다.',
-                'text': '줄바꿈이 되나?'
+                'text': today_date + '일의 상록원 중식 메뉴입니다.'
             },
             'keyboard': {
                 'type': 'buttons',
