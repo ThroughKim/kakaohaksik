@@ -95,7 +95,10 @@ def get_menu(cafeteria_name):
         sang_yang = Menu.objects.get(cafe_name='양식코너').menu
         sang_dduk = Menu.objects.get(cafe_name='뚝배기코너').menu
 
-        return "백반코너 \n" + sang_bek + "일품코너 \n" + sang_ill + "양식코너 \n" + sang_yang + "뚝배기코너 \n" + sang_dduk
+        return "------------\n" +  "백반코너 \n" + sang_bek \
+               + "------------\n" + "일품코너 \n" + sang_ill \
+               + "------------\n" + "양식코너 \n" + sang_yang \
+               + "------------\n" + "뚝배기코너 \n" + sang_dduk
 
 
 def crawl(request):
