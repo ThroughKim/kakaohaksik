@@ -109,7 +109,7 @@ def get_menu(cafeteria_name):
                + "------------\n" + "B코너 \n" + gru_b
 
     elif cafeteria_name == '아리수':
-        ari = Menu.objects.get(cafe_name='아리수')
+        ari = Menu.objects.get(cafe_name='아리수').menu
 
         return "------------\n" + "아리수 \n" + ari
 
@@ -121,8 +121,8 @@ def get_menu(cafeteria_name):
                + "------------\n" + "B코너 \n" + dorm_b
 
     elif cafeteria_name == '교직원식당':
-        kyo_jib = Menu.objects.get(cafe_name='집밥')
-        kyo_han = Menu.objects.get(cafe_name='한그릇')
+        kyo_jib = Menu.objects.get(cafe_name='집밥').menu
+        kyo_han = Menu.objects.get(cafe_name='한그릇').menu
 
         return "------------\n" + "집밥 \n" + kyo_jib \
                + "------------\n" + "한그릇 \n" + kyo_han
@@ -156,13 +156,13 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='집밥',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='한그릇',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -197,25 +197,25 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='백반코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='뚝배기코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='일품코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='양식코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -270,13 +270,13 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='A코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='B코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -311,7 +311,7 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='아리수',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -336,13 +336,13 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='기숙사A코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='기숙사B코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -380,5 +380,5 @@ def flush_menu_db():
     menu_db.delete()
 
 
-#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "상록원"}'
+#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "아리수"}'
 #curl -XGET 'http://127.0.0.1:8000/crawl/'
