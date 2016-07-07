@@ -156,13 +156,13 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='집밥',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='한그릇',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -197,25 +197,25 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='백반코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='뚝배기코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='일품코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='양식코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -270,13 +270,13 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='A코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='B코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -311,7 +311,7 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='아리수',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
@@ -336,13 +336,13 @@ def crawl(request):
         Menu.objects.create(
             cafe_name='기숙사A코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
         Menu.objects.create(
             cafe_name='기숙사B코너',
             time='중식',
-            menu='휴무',
+            menu='휴무 \n',
             is_new=True
         )
 
