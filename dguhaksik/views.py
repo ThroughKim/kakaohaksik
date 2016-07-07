@@ -23,7 +23,7 @@ def answer(request):
     if cafeteria_name == '상록원':
         return JsonResponse({
             'message':{
-                'text': today_date + '의 상록원 중식 메뉴입니다.'
+                'text': today_date + '의 상록원 중식 메뉴입니다. \n' + get_menu('상록원')
             },
             'keyboard': {
                 'type': 'buttons',
@@ -86,6 +86,17 @@ def answer(request):
                 'text': '존재하지 않는 식당이거나 오류 발생중입니다.'
             }
         })
+
+
+def get_menu(cafeteria_name):
+    if cafeteria_name == '상록원':
+        sang_bek = Menu.objects.get(cafe_name='백반코너').menu
+        sang_ill = Menu.objects.get(cafe_name='일품코너').menu
+        sang_yang = Menu.objects.get(cafe_name='양식코너').menu
+        sang_dduk = Menu.objects.get(cafe_name='뚝배기코너').menu
+
+        return sang_bek + sang_ill + sang_yang + sang_dduk
+
 
 def crawl(request):
     #메뉴 DB 테이블 비우기
