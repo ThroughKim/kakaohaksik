@@ -23,31 +23,66 @@ def answer(request):
         return JsonResponse({
             'message':{
                 'text':'상록원'
-           }
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+            }
+
         })
 
     elif cafeteria_name == '그루터기':
         return JsonResponse({
             'message': {
                 'text': '상록원'
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
             }
+
         })
 
     elif cafeteria_name == '아리수':
         return JsonResponse({
             'message': {
                 'text': '아리수'
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
             }
+
         })
-        
+
+    elif cafeteria_name == '기숙사식당':
+        return JsonResponse({
+            'message': {
+                'text': '기숙사식당'
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+            }
+
+        })
+
+    elif cafeteria_name == '교직원식당':
+        return JsonResponse({
+            'message': {
+                'text': '교직원식당'
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+            }
+
+        })
+
     else:
         return JsonResponse({
-            'message' : {
-                'text' : cafeteria_name + '의 메뉴입니다 \n준비중입니다.'
-            },
-            'keyboard' : {
-                'type' : 'buttons',
-                'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+            'message': {
+                'text': '존재하지 않는 식당이거나 오류 발생중입니다.'
             }
         })
 
