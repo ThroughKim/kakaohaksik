@@ -18,7 +18,7 @@ def answer(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
-    today_date = datetime.today().day
+    today_date = datetime.date.today().day
 
     if cafeteria_name == '상록원':
         return JsonResponse({
@@ -335,5 +335,5 @@ def flush_menu_db():
     menu_db.delete()
 
 
-#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "차량번호등록"}'
+#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "상록원"}'
 #curl -XGET 'http://127.0.0.1:8000/crawl/'
