@@ -22,10 +22,24 @@ def answer(request):
     if cafeteria_name == '\uc0c1\ub85d\uc6d0':
         return JsonResponse({
             'message':{
-                'text':'상록원임'
+                'text':'상록원'
            }
         })
 
+    elif cafeteria_name == '그루터기':
+        return JsonResponse({
+            'message': {
+                'text': '상록원'
+            }
+        })
+
+    elif cafeteria_name == '아리수':
+        return JsonResponse({
+            'message': {
+                'text': '아리수'
+            }
+        })
+        
     else:
         return JsonResponse({
             'message' : {
