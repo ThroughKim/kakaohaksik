@@ -18,11 +18,13 @@ def answer(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
+    today_date = datetime.today().day
 
-    if cafeteria_name == '\uc0c1\ub85d\uc6d0':
+    if cafeteria_name == '상록원':
         return JsonResponse({
             'message':{
-                'text':'상록원'
+                'text': today_date + '일의 상록원 중식 메뉴입니다.',
+                'text': '줄바꿈이 되나?'
             },
             'keyboard': {
                 'type': 'buttons',
@@ -34,7 +36,7 @@ def answer(request):
     elif cafeteria_name == '그루터기':
         return JsonResponse({
             'message': {
-                'text': '상록원'
+                'text': '그루터기'
             },
             'keyboard': {
                 'type': 'buttons',
