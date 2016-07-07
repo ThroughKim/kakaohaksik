@@ -19,7 +19,7 @@ def answer(request):
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
 
-    if cafeteria_name == '상록원':
+    if cafeteria_name == '\uc0c1\ub85d\uc6d0':
         return JsonResponse({
             'message':{
                 'text':'상록원임'
