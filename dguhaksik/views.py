@@ -18,7 +18,8 @@ def answer(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
-    today_date = datetime.date.today().day
+    today_date = str(datetime.date.today().day)
+
 
     if cafeteria_name == '상록원':
         return JsonResponse({
