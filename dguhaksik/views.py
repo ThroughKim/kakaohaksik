@@ -21,72 +21,16 @@ def answer(request):
     cafeteria_name = received_json_data['content']
     today_date = datetime.date.today().strftime("%m월 %d일")
 
-    if cafeteria_name == '상록원':
-        return JsonResponse({
-            'message':{
-                'text': today_date + '의 상록원 중식 메뉴입니다. \n \n' + get_menu('상록원')
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
-            }
+    return JsonResponse({
+        'message': {
+            'text': today_date + '의 ' + cafeteria_name + ' 중식 메뉴입니다. \n \n' + get_menu(cafeteria_name)
+        },
+        'keyboard': {
+            'type': 'buttons',
+            'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+        }
 
-        })
-
-    elif cafeteria_name == '그루터기':
-        return JsonResponse({
-            'message': {
-                'text': today_date + '의 그루터기 중식 메뉴입니다. \n \n' + get_menu('그루터기')
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
-            }
-
-        })
-
-    elif cafeteria_name == '아리수':
-        return JsonResponse({
-            'message': {
-                'text': today_date + '의 아리수 중식 메뉴입니다. \n \n' + get_menu('아리수')
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
-            }
-
-        })
-
-    elif cafeteria_name == '기숙사식당':
-        return JsonResponse({
-            'message': {
-                'text': today_date + '의 기숙사식당 중식 메뉴입니다. \n \n' + get_menu('기숙사식당')
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
-            }
-
-        })
-
-    elif cafeteria_name == '교직원식당':
-        return JsonResponse({
-            'message': {
-                'text': today_date + '의 교직원식당 중식 메뉴입니다. \n \n' + get_menu('교직원식당')
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
-            }
-
-        })
-
-    else:
-        return JsonResponse({
-            'message': {
-                'text': '존재하지 않는 식당이거나 오류 발생중입니다.'
-            }
-        })
+    })
 
 
 def get_menu(cafeteria_name):
