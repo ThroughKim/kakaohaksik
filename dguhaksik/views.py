@@ -23,7 +23,7 @@ def answer(request):
 
     return JsonResponse({
         'message': {
-            'text': today_date + '의 ' + cafeteria_name + ' 중식 메뉴입니다.'# \n \n' + get_menu(cafeteria_name)
+            'text': today_date + '의 ' + cafeteria_name + ' 중식 메뉴입니다. \n \n' + get_menu(cafeteria_name)
         },
         'keyboard': {
             'type': 'buttons',
