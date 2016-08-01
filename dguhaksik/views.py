@@ -10,7 +10,7 @@ def keyboard(request):
 
     return JsonResponse({
         'type' : 'buttons',
-        'buttons' : ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+        'buttons' : ['상록원', '그루터기', '가든쿡', '기숙사식당', '교직원식당']
     })
 
 
@@ -27,7 +27,7 @@ def answer(request):
         },
         'keyboard': {
             'type': 'buttons',
-            'buttons': ['상록원', '그루터기', '아리수', '기숙사식당', '교직원식당']
+            'buttons': ['상록원', '그루터기', '가든쿡', '기숙사식당', '교직원식당']
         }
 
     })
@@ -52,10 +52,10 @@ def get_menu(cafeteria_name):
         return "------------\n" +  "A코너 \n" + gru_a \
                + "------------\n" + "B코너 \n" + gru_b
 
-    elif cafeteria_name == '아리수':
-        ari = Menu.objects.get(cafe_name='아리수').menu
+    elif cafeteria_name == '가든쿡':
+        ari = Menu.objects.get(cafe_name='가든쿡').menu
 
-        return "------------\n" + "아리수 \n" + ari
+        return "------------\n" + "가든쿡 \n" + ari
 
     elif cafeteria_name == '기숙사식당':
         dorm_a = Menu.objects.get(cafe_name='기숙사A코너').menu
@@ -90,9 +90,9 @@ def crawl(request):
     #식당별 테이블 지정
     kyo_table = menu_tables[0]
     sang_table = menu_tables[1]
-    gru_table = menu_tables[4]
-    ari_table = menu_tables[6]
-    dorm_table = menu_tables[7]
+    gru_table = menu_tables[3]
+    garden_table = menu_tables[5]
+    dorm_table = menu_tables[6]
 
 
     #교직원 식당
@@ -170,20 +170,20 @@ def crawl(request):
         create_menu_db_table('B코너', '중식', gru_b_menu + gru_b_price)
 
 
-    #아리수
-    if ari_table.find(text="휴무"):
-        create_menu_db_table('아리수', '중식', '휴무 \n')
+    #가든쿡
+    if garden_table.find(text="휴무"):
+        create_menu_db_table('가든쿡', '중식', '휴무 \n')
 
 
 
     else:
-        ari_trs = ari_table.find_all('tr')
+        ari_trs = garden_table.find_all('tr')
         ari_tables = ari_trs[1].find_all('tables')
         ari_trs = ari_tables[0].find_all('tr')
         ari_menu = ari_trs[0].text
         ari_price = ari_trs[1].text
 
-        create_menu_db_table('아리수', '중식', ari_menu + ari_price)
+        create_menu_db_table('가든쿡', '중식', ari_menu + ari_price)
 
 
     #기숙사 식당
@@ -224,5 +224,5 @@ def flush_menu_db():
     menu_db.delete()
 
 
-#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "아리수"}'
+#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "가든쿡"}'
 #curl -XGET 'http://127.0.0.1:8000/crawl/'
