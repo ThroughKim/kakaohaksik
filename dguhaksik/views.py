@@ -53,9 +53,9 @@ def get_menu(cafeteria_name):
                + "------------\n" + "B코너 \n" + gru_b
 
     elif cafeteria_name == '가든쿡':
-        ari = Menu.objects.get(cafe_name='가든쿡').menu
+        garden = Menu.objects.get(cafe_name='가든쿡').menu
 
-        return "------------\n" + "가든쿡 \n" + ari
+        return "------------\n" + "가든쿡 \n" + garden
 
     elif cafeteria_name == '기숙사식당':
         dorm_a = Menu.objects.get(cafe_name='기숙사A코너').menu
@@ -177,13 +177,13 @@ def crawl(request):
 
 
     else:
-        ari_trs = garden_table.find_all('tr')
-        ari_tables = ari_trs[1].find_all('tables')
-        ari_trs = ari_tables[0].find_all('tr')
-        ari_menu = ari_trs[0].text
-        ari_price = ari_trs[1].text
+        garden_trs = garden_table.find_all('tr')
+        garden_tables = garden_trs[1].find_all('tables')
+        garden_trs = garden_tables[0].find_all('tr')
+        garden_menu = garden_trs[0].text
+        garden_price = garden_trs[1].text
 
-        create_menu_db_table('가든쿡', '중식', ari_menu + ari_price)
+        create_menu_db_table('가든쿡', '중식', garden_menu + garden_price)
 
 
     #기숙사 식당
