@@ -10,7 +10,7 @@ def keyboard(request):
 
     return JsonResponse({
         'type' : 'buttons',
-        'buttons' : ['상록원', '그루터기', '가든쿡', '기숙사식당', '교직원식당']
+        'buttons' : ['상록원', '그루터기', '기숙사식당', '교직원식당']
     })
 
 
@@ -27,7 +27,7 @@ def answer(request):
         },
         'keyboard': {
             'type': 'buttons',
-            'buttons': ['상록원', '그루터기', '가든쿡', '기숙사식당', '교직원식당']
+            'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
         }
 
     })
@@ -51,11 +51,6 @@ def get_menu(cafeteria_name):
 
         return "------------\n" +  "A코너 \n" + gru_a \
                + "------------\n" + "B코너 \n" + gru_b
-
-    elif cafeteria_name == '가든쿡':
-        garden = Menu.objects.get(cafe_name='가든쿡').menu
-
-        return "------------\n" + "가든쿡 \n" + garden
 
     elif cafeteria_name == '기숙사식당':
         dorm_a = Menu.objects.get(cafe_name='기숙사A코너').menu
@@ -91,7 +86,6 @@ def crawl(request):
     kyo_table = menu_tables[0]
     sang_table = menu_tables[1]
     gru_table = menu_tables[3]
-    garden_table = menu_tables[5]
     dorm_table = menu_tables[6]
 
 
@@ -168,22 +162,6 @@ def crawl(request):
 
         create_menu_db_table('A코너', '중식', gru_a_menu + gru_a_price)
         create_menu_db_table('B코너', '중식', gru_b_menu + gru_b_price)
-
-
-    #가든쿡
-    if garden_table.find(text="휴무"):
-        create_menu_db_table('가든쿡', '중식', '휴무 \n')
-
-
-
-    else:
-        garden_trs = garden_table.find_all('tr')
-        garden_tables = garden_trs[1].find_all('tables')
-        garden_trs = garden_tables[0].find_all('tr')
-        garden_menu = garden_trs[0].text
-        garden_price = garden_trs[1].text
-
-        create_menu_db_table('가든쿡', '중식', garden_menu + garden_price)
 
 
     #기숙사 식당
