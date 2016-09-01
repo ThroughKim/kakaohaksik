@@ -150,7 +150,7 @@ def crawl(request):
 
     else:
         gru_trs = gru_table.find_all('tr')
-        gru_tables = gru_trs[1].find_all('tables')
+        gru_tables = gru_trs[1].find_all('table')
 
         gru_a_trs = gru_tables[0].find_all('tr')
         gru_a_menu = gru_a_trs[0].text
