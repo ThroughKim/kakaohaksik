@@ -1,6 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from dguhaksik.models import Menu
+from dguhaksik.models import Menu, Log
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import json, datetime
@@ -34,6 +34,7 @@ def answer(request):
 
 
 def get_menu(cafeteria_name):
+    create_log(cafeteria_name)
     if cafeteria_name == '상록원':
         sang_bek = Menu.objects.get(cafe_name='백반코너').menu
         sang_ill = Menu.objects.get(cafe_name='일품코너').menu
@@ -194,6 +195,12 @@ def create_menu_db_table(cafe_name, time, menu):
         time=time,
         menu=menu,
         is_new=True
+    )
+
+
+def create_log(cafe_name):
+    Log.objects.create(
+        cafe_name = cafe_name
     )
 
 
