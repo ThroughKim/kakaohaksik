@@ -45,11 +45,11 @@ def get_menu(cafeteria_name):
         sang_yang_dinner = Menu.objects.get(cafe_name='양식코너', time='석식').menu
         sang_dduk_dinner = Menu.objects.get(cafe_name='뚝배기코너', time='석식').menu
 
-        return "중식\n------------\n" +  "백반코너 \n" + sang_bek_lunch \
+        return "중식\n============\n" +  "백반코너 \n" + sang_bek_lunch \
                + "------------\n" + "일품코너 \n" + sang_ill_lunch \
                + "------------\n" + "양식코너 \n" + sang_yang_lunch \
                + "------------\n" + "뚝배기코너 \n" + sang_dduk_lunch \
-               + "\n석식\n------------\n" + "일품코너 \n" + sang_ill_dinner \
+               + "\n석식\n=============\n" + "일품코너 \n" + sang_ill_dinner \
                + "------------\n" + "양식코너 \n" + sang_yang_dinner \
                + "------------\n" + "뚝배기코너 \n" + sang_dduk_dinner
 
