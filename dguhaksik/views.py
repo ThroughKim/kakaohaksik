@@ -50,7 +50,7 @@ def get_menu(cafeteria_name):
                + "------------\n" + "일품코너 \n" + sang_ill_lunch \
                + "------------\n" + "양식코너 \n" + sang_yang_lunch \
                + "------------\n" + "뚝배기코너 \n" + sang_dduk_lunch \
-               + "\n============\n석식\n=============\n" \
+               + "\n============\n석식\n============\n" \
                + "일품코너 \n" + sang_ill_dinner \
                + "------------\n" + "양식코너 \n" + sang_yang_dinner \
                + "------------\n" + "뚝배기코너 \n" + sang_dduk_dinner
@@ -68,7 +68,7 @@ def get_menu(cafeteria_name):
         return "============\n중식\n============\n"\
                + "A코너 \n" + gru_a_lunch \
                + "------------\n" + "B코너 \n" + gru_b_lunch \
-               + "\n============\n석식\n=============\n" \
+               + "\n============\n석식\n============\n" \
                + "A코너 \n" + gru_a_dinner \
                + "------------\n" + "B코너 \n" + gru_b_dinner \
 
@@ -80,16 +80,21 @@ def get_menu(cafeteria_name):
 
         return "============\n중식\n============\n" \
                + "A코너 \n" + dorm_a_lunch \
-               + "------------\n" + "B코너 \n" + dorm_b_lunch \
-               + "\n============\n석식\n=============\n" \
-               + "------------\n" + "A코너 \n" + dorm_a_dinner
+               + "------------\n" + "B코너 \n" + dorm_b_lunch \ㅎ
+               + "\n============\n석식\n============\n" \
+               + "A코너 \n" + dorm_a_dinner
 
     elif cafeteria_name == '교직원식당':
-        kyo_jib = Menu.objects.get(cafe_name='집밥').menu
-        kyo_han = Menu.objects.get(cafe_name='한그릇').menu
+        kyo_jib_lunch = Menu.objects.get(cafe_name='집밥', time='중식').menu
+        kyo_han_lunch = Menu.objects.get(cafe_name='한그릇', time='중식').menu
 
-        return "------------\n" + "집밥 \n" + kyo_jib \
-               + "------------\n" + "한그릇 \n" + kyo_han
+        kyo_jib_dinner = Menu.objects.get(cafe_name='집밥', time='석식').menu
+
+        return "============\n중식\n============\n" \
+               + "집밥 \n" + kyo_jib_lunch \
+               + "------------\n" + "한그릇 \n" + kyo_han_lunch \
+               + "\n============\n석식\n============\n" \
+               + "집밥 \n" + kyo_jib_dinner
 
     else:
         return "존재하지 않는 식당이거나 오류 발생중입니다."
