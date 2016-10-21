@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Menu, Log
 
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ['id', 'cafe_name', 'menu']
+    list_display = ['id', 'cafe_name', 'time', 'menu']
 
 admin.site.register(Menu, MenuAdmin)
 

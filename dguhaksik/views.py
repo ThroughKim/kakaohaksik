@@ -120,28 +120,51 @@ def crawl(request):
 
     else:
         sang_trs = sang_table.find_all('tr')
-        sang_tables = sang_trs[1].find_all('table')
+        for tr in sang_trs:
+            if tr.find(text="중식"):
+                sang_lunch_tables = tr.find_all('table')
 
-        sang_bek_trs = sang_tables[0].find_all('tr')
-        sang_bek_menu = sang_bek_trs[0].text
-        sang_bek_price = sang_bek_trs[1].text
+                sang_bek_trs = sang_lunch_tables[0].find_all('tr')
+                sang_bek_menu = sang_bek_trs[0].text
+                sang_bek_price = sang_bek_trs[1].text
 
-        sang_ill_trs = sang_tables[1].find_all('tr')
-        sang_ill_menu = sang_ill_trs[0].text
-        sang_ill_price = sang_ill_trs[1].text
+                sang_ill_trs = sang_lunch_tables[1].find_all('tr')
+                sang_ill_menu = sang_ill_trs[0].text
+                sang_ill_price = sang_ill_trs[1].text
 
-        sang_yang_trs = sang_tables[2].find_all('tr')
-        sang_yang_menu = sang_yang_trs[0].text
-        sang_yang_price = sang_yang_trs[1]. text
+                sang_yang_trs = sang_lunch_tables[2].find_all('tr')
+                sang_yang_menu = sang_yang_trs[0].text
+                sang_yang_price = sang_yang_trs[1]. text
 
-        sang_dduk_trs = sang_tables[3].find_all('tr')
-        sang_dduk_menu = sang_dduk_trs[0].text
-        sang_dduk_price = sang_dduk_trs[1].text
+                sang_dduk_trs = sang_lunch_tables[3].find_all('tr')
+                sang_dduk_menu = sang_dduk_trs[0].text
+                sang_dduk_price = sang_dduk_trs[1].text
 
-        create_menu_db_table('백반코너', '중식', sang_bek_menu + sang_bek_price)
-        create_menu_db_table('일품코너', '중식', sang_ill_menu + sang_ill_price)
-        create_menu_db_table('양식코너', '중식', sang_yang_menu + sang_yang_price)
-        create_menu_db_table('뚝배기코너', '중식', sang_dduk_menu + sang_dduk_price)
+                create_menu_db_table('백반코너', '중식', sang_bek_menu + sang_bek_price)
+                create_menu_db_table('일품코너', '중식', sang_ill_menu + sang_ill_price)
+                create_menu_db_table('양식코너', '중식', sang_yang_menu + sang_yang_price)
+                create_menu_db_table('뚝배기코너', '중식', sang_dduk_menu + sang_dduk_price)
+
+            elif tr.find(text="석식"):
+                sang_dinner_tables = tr.find_all('table')
+
+                sang_ill_trs = sang_dinner_tables[1].find_all('tr')
+                sang_ill_menu = sang_ill_trs[0].text
+                sang_ill_price = sang_ill_trs[1].text
+
+                sang_yang_trs = sang_dinner_tables[2].find_all('tr')
+                sang_yang_menu = sang_yang_trs[0].text
+                sang_yang_price = sang_yang_trs[1].text
+
+                sang_dduk_trs = sang_dinner_tables[3].find_all('tr')
+                sang_dduk_menu = sang_dduk_trs[0].text
+                sang_dduk_price = sang_dduk_trs[1].text
+
+                create_menu_db_table('일품코너', '석식', sang_ill_menu + sang_ill_price)
+                create_menu_db_table('양식코너', '석식', sang_yang_menu + sang_yang_price)
+                create_menu_db_table('뚝배기코너', '석식', sang_dduk_menu + sang_dduk_price)
+
+
 
 
     #그루터기
@@ -151,18 +174,34 @@ def crawl(request):
 
     else:
         gru_trs = gru_table.find_all('tr')
-        gru_tables = gru_trs[1].find_all('table')
+        for tr in gru_trs:
+            if tr.find(text="중식"):
+                gru_lunch_tables = tr.find_all('table')
 
-        gru_a_trs = gru_tables[0].find_all('tr')
-        gru_a_menu = gru_a_trs[0].text
-        gru_a_price = gru_a_trs[1].text
+                gru_a_trs = gru_lunch_tables[0].find_all('tr')
+                gru_a_menu = gru_a_trs[0].text
+                gru_a_price = gru_a_trs[1].text
 
-        gru_b_trs = gru_tables[1].find_all('tr')
-        gru_b_menu = gru_b_trs[0].text
-        gru_b_price = gru_b_trs[1].text
+                gru_b_trs = gru_lunch_tables[1].find_all('tr')
+                gru_b_menu = gru_b_trs[0].text
+                gru_b_price = gru_b_trs[1].text
 
-        create_menu_db_table('A코너', '중식', gru_a_menu + gru_a_price)
-        create_menu_db_table('B코너', '중식', gru_b_menu + gru_b_price)
+                create_menu_db_table('A코너', '중식', gru_a_menu + gru_a_price)
+                create_menu_db_table('B코너', '중식', gru_b_menu + gru_b_price)
+
+            elif tr.find(text='석식'):
+                gru_dinner_tables = tr.find_all('table')
+
+                gru_a_trs = gru_dinner_tables[0].find_all('tr')
+                gru_a_menu = gru_a_trs[0].text
+                gru_a_price = gru_a_trs[1].text
+
+                gru_b_trs = gru_dinner_tables[1].find_all('tr')
+                gru_b_menu = gru_b_trs[0].text
+                gru_b_price = gru_b_trs[1].text
+
+                create_menu_db_table('A코너', '석식', gru_a_menu + gru_a_price)
+                create_menu_db_table('B코너', '석식', gru_b_menu + gru_b_price)
 
 
     #기숙사 식당
@@ -171,20 +210,30 @@ def crawl(request):
         create_menu_db_table('기숙사B코너', '중식', '휴무 \n')
 
     else:
+        # 중식이 검색이 안되는 문제 발생... 일단 원래 방법으로 구현해놓음
         dorm_trs = dorm_table.find_all('tr')
-        dorm_tables = dorm_trs[5].find_all('table')
+        dorm_lunch_tables = dorm_trs[5].find_all('table')
 
-        dorm_a_trs = dorm_tables[0].find_all('tr')
+        dorm_a_trs = dorm_lunch_tables[0].find_all('tr')
         dorm_a_menu = dorm_a_trs[0].text
         dorm_a_price = dorm_a_trs[1].text
 
-        dorm_b_trs = dorm_tables[1].find_all('tr')
+        dorm_b_trs = dorm_lunch_tables[1].find_all('tr')
         dorm_b_menu = dorm_b_trs[0].text
         dorm_b_price = dorm_b_trs[1].text
 
         create_menu_db_table('기숙사A코너', '중식', dorm_a_menu + dorm_a_price)
         create_menu_db_table('기숙사B코너', '중식', dorm_b_menu + dorm_b_price)
 
+        for tr in dorm_trs:
+            if tr.find(text='석식'):
+                dorm_dinner_tables = tr.find_all('table')
+
+                dorm_a_trs = dorm_dinner_tables[0].find_all('tr')
+                dorm_a_menu = dorm_a_trs[0].text
+                dorm_a_price = dorm_a_trs[1].text
+
+                create_menu_db_table('기숙사A코너', '석식', dorm_a_menu + dorm_a_price)
 
     return JsonResponse({'status' : 'crawled'})
 
