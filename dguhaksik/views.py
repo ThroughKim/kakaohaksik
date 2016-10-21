@@ -80,7 +80,7 @@ def get_menu(cafeteria_name):
 
         return "============\n중식\n============\n" \
                + "A코너 \n" + dorm_a_lunch \
-               + "------------\n" + "B코너 \n" + dorm_b_lunch \ㅎ
+               + "------------\n" + "B코너 \n" + dorm_b_lunch \
                + "\n============\n석식\n============\n" \
                + "A코너 \n" + dorm_a_dinner
 
