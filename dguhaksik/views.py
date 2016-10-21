@@ -23,7 +23,7 @@ def answer(request):
 
     return JsonResponse({
         'message': {
-            'text': today_date + '의 ' + cafeteria_name + ' 중식 메뉴입니다. \n \n' + get_menu(cafeteria_name)
+            'text': today_date + '의 ' + cafeteria_name + '의 메뉴입니다. \n \n' + get_menu(cafeteria_name)
         },
         'keyboard': {
             'type': 'buttons',
@@ -36,15 +36,25 @@ def answer(request):
 def get_menu(cafeteria_name):
     create_log(cafeteria_name)
     if cafeteria_name == '상록원':
-        sang_bek = Menu.objects.get(cafe_name='백반코너').menu
-        sang_ill = Menu.objects.get(cafe_name='일품코너').menu
-        sang_yang = Menu.objects.get(cafe_name='양식코너').menu
-        sang_dduk = Menu.objects.get(cafe_name='뚝배기코너').menu
+        sang_bek_lunch = Menu.objects.get(cafe_name='백반코너', time='중식').menu
+        sang_ill_lunch = Menu.objects.get(cafe_name='일품코너', time='중식').menu
+        sang_yang_lunch = Menu.objects.get(cafe_name='양식코너', time='중식').menu
+        sang_dduk_lunch = Menu.objects.get(cafe_name='뚝배기코너', time='중식').menu
 
-        return "------------\n" +  "백반코너 \n" + sang_bek \
-               + "------------\n" + "일품코너 \n" + sang_ill \
-               + "------------\n" + "양식코너 \n" + sang_yang \
-               + "------------\n" + "뚝배기코너 \n" + sang_dduk
+        sang_ill_dinner = Menu.objects.get(cafe_name='일품코너', time='석식').menu
+        sang_yang_dinner = Menu.objects.get(cafe_name='양식코너', time='석식').menu
+        sang_dduk_dinner = Menu.objects.get(cafe_name='뚝배기코너', time='석식').menu
+
+        return "중식\n------------\n" +  "백반코너 \n" + sang_bek_lunch \
+               + "------------\n" + "일품코너 \n" + sang_ill_lunch \
+               + "------------\n" + "양식코너 \n" + sang_yang_lunch \
+               + "------------\n" + "뚝배기코너 \n" + sang_dduk_lunch \
+               + "\n석식\n------------\n" + "일품코너 \n" + sang_ill_dinner \
+               + "------------\n" + "양식코너 \n" + sang_yang_dinner \
+               + "------------\n" + "뚝배기코너 \n" + sang_dduk_dinner
+
+
+
 
     elif cafeteria_name == '그루터기':
         gru_a = Menu.objects.get(cafe_name='A코너').menu
