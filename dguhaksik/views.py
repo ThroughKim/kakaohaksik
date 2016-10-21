@@ -45,11 +45,13 @@ def get_menu(cafeteria_name):
         sang_yang_dinner = Menu.objects.get(cafe_name='양식코너', time='석식').menu
         sang_dduk_dinner = Menu.objects.get(cafe_name='뚝배기코너', time='석식').menu
 
-        return "중식\n============\n" +  "백반코너 \n" + sang_bek_lunch \
+        return "============\n중식\n============\n" \
+               +  "백반코너 \n" + sang_bek_lunch \
                + "------------\n" + "일품코너 \n" + sang_ill_lunch \
                + "------------\n" + "양식코너 \n" + sang_yang_lunch \
                + "------------\n" + "뚝배기코너 \n" + sang_dduk_lunch \
-               + "\n석식\n=============\n" + "일품코너 \n" + sang_ill_dinner \
+               + "\n============\n석식\n=============\n" \
+               + "일품코너 \n" + sang_ill_dinner \
                + "------------\n" + "양식코너 \n" + sang_yang_dinner \
                + "------------\n" + "뚝배기코너 \n" + sang_dduk_dinner
 
@@ -57,18 +59,30 @@ def get_menu(cafeteria_name):
 
 
     elif cafeteria_name == '그루터기':
-        gru_a = Menu.objects.get(cafe_name='A코너').menu
-        gru_b = Menu.objects.get(cafe_name='B코너').menu
+        gru_a_lunch = Menu.objects.get(cafe_name='A코너', time='중식').menu
+        gru_b_lunch = Menu.objects.get(cafe_name='B코너', time='석식').menu
 
-        return "------------\n" +  "A코너 \n" + gru_a \
-               + "------------\n" + "B코너 \n" + gru_b
+        gru_a_dinner = Menu.objects.get(cafe_name='A코너', time='석식').menu
+        gru_b_dinner = Menu.objects.get(cafe_name='B코너', time='석식').menu
+
+        return "============\n중식\n============\n"\
+               + "A코너 \n" + gru_a_lunch \
+               + "------------\n" + "B코너 \n" + gru_b_lunch \
+               + "\n============\n석식\n=============\n" \
+               + "A코너 \n" + gru_a_dinner \
+               + "------------\n" + "B코너 \n" + gru_b_dinner \
 
     elif cafeteria_name == '기숙사식당':
-        dorm_a = Menu.objects.get(cafe_name='기숙사A코너').menu
-        dorm_b = Menu.objects.get(cafe_name='기숙사B코너').menu
+        dorm_a_lunch = Menu.objects.get(cafe_name='기숙사A코너', time='중식').menu
+        dorm_b_lunch = Menu.objects.get(cafe_name='기숙사B코너', time='중식').menu
 
-        return "------------\n" + "A코너 \n" + dorm_a \
-               + "------------\n" + "B코너 \n" + dorm_b
+        dorm_a_dinner = Menu.objects.get(cafe_name='기숙사A코너', time='석식').menu
+
+        return "============\n중식\n============\n" \
+               + "A코너 \n" + dorm_a_lunch \
+               + "------------\n" + "B코너 \n" + dorm_b_lunch \
+               + "\n============\n석식\n=============\n" \
+               + "------------\n" + "A코너 \n" + dorm_a_dinner
 
     elif cafeteria_name == '교직원식당':
         kyo_jib = Menu.objects.get(cafe_name='집밥').menu
@@ -106,6 +120,7 @@ def crawl(request):
         create_menu_db_table('한그릇', '중식', '휴무 \n')
 
     else:
+        # 중식이 검색이 안되는 문제 발생... 일단 원래 방법으로 구현해놓음
         kyo_trs = kyo_table.find_all('tr')
         kyo_tables = kyo_trs[1].find_all('table')
 
@@ -119,6 +134,16 @@ def crawl(request):
 
         create_menu_db_table('집밥', '중식', kyo_jib_menu + kyo_jib_price)
         create_menu_db_table('한그릇', '중식', kyo_han_menu + kyo_han_price)
+
+        for tr in kyo_trs:
+            if tr.find(text='석식'):
+                kyo_tables = tr.find_all('table')
+
+                kyo_jib_trs = kyo_tables[0].find_all('tr')
+                kyo_jib_menu = kyo_jib_trs[0].text
+                kyo_jib_price = kyo_jib_trs[1].text
+
+                create_menu_db_table('집밥', '석식', kyo_jib_menu + kyo_jib_price)
 
 
     #상록원
