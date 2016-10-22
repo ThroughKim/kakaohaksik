@@ -10,7 +10,7 @@ def keyboard(request):
 
     return JsonResponse({
         'type' : 'buttons',
-        'buttons' : ['상록원', '그루터기', '기숙사식당', '교직원식당']
+        'buttons' : ['상록원', '그루터기', '기숙사식당', '교직원식당', 'TEST']
     })
 
 
