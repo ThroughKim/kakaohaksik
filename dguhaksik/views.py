@@ -10,7 +10,7 @@ def keyboard(request):
 
     return JsonResponse({
         'type' : 'buttons',
-        'buttons' : ['상록원', '그루터기', '기숙사식당', '교직원식당', 'TEST']
+        'buttons' : ['상록원', '그루터기', '기숙사식당', '교직원식당']
     })
 
 
@@ -25,14 +25,7 @@ def answer(request):
     today_weekday = today.isoweekday()
     hour_now = datetime.datetime.now().hour
 
-    if cafeteria_name == "TEST":
-        return JsonResponse({
-            'message': {
-                'text': "" + get_lunch_menu("상록원") + get_lunch_menu("그루터기") + get_dinner_menu("상록원") + get_dinner_menu("그루터기")
-            }
-        })
-
-    elif today_weekday >= 6:
+    if today_weekday >= 6:
         create_log("주말요청")
         return JsonResponse({
             'message':{
