@@ -19,21 +19,55 @@ def answer(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
-    today_date = datetime.date.today().strftime("%m월 %d일")
 
-    return JsonResponse({
-        'message': {
-            'text': today_date + '의 ' + cafeteria_name + '의 메뉴입니다. \n \n' + get_menu(cafeteria_name)
-        },
-        'keyboard': {
-            'type': 'buttons',
-            'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
-        }
+    today = datetime.date.today()
+    today_date = today.strftime("%m월 %d일")
+    today_weekday = today.isoweekday()
+    hour_now = datetime.datetime.now().hour
 
-    })
+    if cafeteria_name == "TEST":
+        return JsonResponse({
+            'message': {
+                'text': "" + get_lunch_menu("상록원") + get_lunch_menu("그루터기") + get_dinner_menu("상록원") + get_dinner_menu("그루터기")
+            }
+        })
+
+    elif today_weekday >= 6:
+        create_log("주말요청")
+        return JsonResponse({
+            'message':{
+                'text': '죄송합니다 주말에는 서비스를 제공하지 않습니다.'
+            },
+            'keyboard':{
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
+            }
+        })
+
+    elif hour_now >= 15:
+        return JsonResponse({
+            'message':{
+                'text': today_date + '의 ' + cafeteria_name + '의 저녁메뉴 입니다. \n \n' + get_dinner_menu(cafeteria_name)
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
+            }
+        })
+
+    else :
+        return JsonResponse({
+            'message': {
+                'text': today_date + '의 ' + cafeteria_name + '의 점심 메뉴입니다. \n \n' + get_lunch_menu(cafeteria_name)
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
+            }
+        })
 
 
-def get_menu(cafeteria_name):
+def get_lunch_menu(cafeteria_name):
     create_log(cafeteria_name)
     if cafeteria_name == '상록원':
         sang_bek_lunch = Menu.objects.get(cafe_name='백반코너', time='중식').menu
@@ -41,59 +75,70 @@ def get_menu(cafeteria_name):
         sang_yang_lunch = Menu.objects.get(cafe_name='양식코너', time='중식').menu
         sang_dduk_lunch = Menu.objects.get(cafe_name='뚝배기코너', time='중식').menu
 
-        sang_ill_dinner = Menu.objects.get(cafe_name='일품코너', time='석식').menu
-        sang_yang_dinner = Menu.objects.get(cafe_name='양식코너', time='석식').menu
-        sang_dduk_dinner = Menu.objects.get(cafe_name='뚝배기코너', time='석식').menu
-
         return "============\n중식\n============\n" \
                +  "백반코너 \n" + sang_bek_lunch \
                + "------------\n" + "일품코너 \n" + sang_ill_lunch \
                + "------------\n" + "양식코너 \n" + sang_yang_lunch \
-               + "------------\n" + "뚝배기코너 \n" + sang_dduk_lunch \
-               + "\n============\n석식\n============\n" \
-               + "일품코너 \n" + sang_ill_dinner \
-               + "------------\n" + "양식코너 \n" + sang_yang_dinner \
-               + "------------\n" + "뚝배기코너 \n" + sang_dduk_dinner
-
-
-
+               + "------------\n" + "뚝배기코너 \n" + sang_dduk_lunch
 
     elif cafeteria_name == '그루터기':
         gru_a_lunch = Menu.objects.get(cafe_name='A코너', time='중식').menu
         gru_b_lunch = Menu.objects.get(cafe_name='B코너', time='석식').menu
 
-        gru_a_dinner = Menu.objects.get(cafe_name='A코너', time='석식').menu
-        gru_b_dinner = Menu.objects.get(cafe_name='B코너', time='석식').menu
-
         return "============\n중식\n============\n"\
                + "A코너 \n" + gru_a_lunch \
-               + "------------\n" + "B코너 \n" + gru_b_lunch \
-               + "\n============\n석식\n============\n" \
-               + "A코너 \n" + gru_a_dinner \
-               + "------------\n" + "B코너 \n" + gru_b_dinner \
+               + "------------\n" + "B코너 \n" + gru_b_lunch
 
     elif cafeteria_name == '기숙사식당':
         dorm_a_lunch = Menu.objects.get(cafe_name='기숙사A코너', time='중식').menu
         dorm_b_lunch = Menu.objects.get(cafe_name='기숙사B코너', time='중식').menu
 
-        dorm_a_dinner = Menu.objects.get(cafe_name='기숙사A코너', time='석식').menu
-
         return "============\n중식\n============\n" \
                + "A코너 \n" + dorm_a_lunch \
-               + "------------\n" + "B코너 \n" + dorm_b_lunch \
-               + "\n============\n석식\n============\n" \
-               + "A코너 \n" + dorm_a_dinner
+               + "------------\n" + "B코너 \n" + dorm_b_lunch
 
     elif cafeteria_name == '교직원식당':
         kyo_jib_lunch = Menu.objects.get(cafe_name='집밥', time='중식').menu
         kyo_han_lunch = Menu.objects.get(cafe_name='한그릇', time='중식').menu
 
-        kyo_jib_dinner = Menu.objects.get(cafe_name='집밥', time='석식').menu
-
         return "============\n중식\n============\n" \
                + "집밥 \n" + kyo_jib_lunch \
-               + "------------\n" + "한그릇 \n" + kyo_han_lunch \
-               + "\n============\n석식\n============\n" \
+               + "------------\n" + "한그릇 \n" + kyo_han_lunch
+
+    else:
+        return "존재하지 않는 식당이거나 오류 발생중입니다."
+
+
+def get_dinner_menu(cafeteria_name):
+    create_log(cafeteria_name)
+    if cafeteria_name == '상록원':
+        sang_ill_dinner = Menu.objects.get(cafe_name='일품코너', time='석식').menu
+        sang_yang_dinner = Menu.objects.get(cafe_name='양식코너', time='석식').menu
+        sang_dduk_dinner = Menu.objects.get(cafe_name='뚝배기코너', time='석식').menu
+
+        return "\n============\n석식\n============\n" \
+               + "일품코너 \n" + sang_ill_dinner \
+               + "------------\n" + "양식코너 \n" + sang_yang_dinner \
+               + "------------\n" + "뚝배기코너 \n" + sang_dduk_dinner
+
+    elif cafeteria_name == '그루터기':
+        gru_a_dinner = Menu.objects.get(cafe_name='A코너', time='석식').menu
+        gru_b_dinner = Menu.objects.get(cafe_name='B코너', time='석식').menu
+
+        return "\n============\n석식\n============\n" \
+               + "A코너 \n" + gru_a_dinner \
+               + "------------\n" + "B코너 \n" + gru_b_dinner \
+
+    elif cafeteria_name == '기숙사식당':
+        dorm_a_dinner = Menu.objects.get(cafe_name='기숙사A코너', time='석식').menu
+
+        return "\n============\n석식\n============\n" \
+               + "A코너 \n" + dorm_a_dinner
+
+    elif cafeteria_name == '교직원식당':
+        kyo_jib_dinner = Menu.objects.get(cafe_name='집밥', time='석식').menu
+
+        return "\n============\n석식\n============\n" \
                + "집밥 \n" + kyo_jib_dinner
 
     else:
