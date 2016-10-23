@@ -148,6 +148,8 @@ def crawl(request):
     if kyo_table.find(text="휴무"):
         create_menu_db_table('집밥', '중식', '휴무 \n')
         create_menu_db_table('한그릇', '중식', '휴무 \n')
+        create_menu_db_table('집밥', '석식', '휴무 \n')
+        create_menu_db_table('한그릇', '석식', '휴무 \n')
 
     else:
         # 중식이 검색이 안되는 문제 발생... 일단 원래 방법으로 구현해놓음
@@ -182,6 +184,10 @@ def crawl(request):
         create_menu_db_table('일품코너', '중식', '휴무 \n')
         create_menu_db_table('양식코너', '중식', '휴무 \n')
         create_menu_db_table('뚝배기코너', '중식', '휴무 \n')
+        create_menu_db_table('백반코너', '석식', '휴무 \n')
+        create_menu_db_table('일품코너', '석식', '휴무 \n')
+        create_menu_db_table('양식코너', '석식', '휴무 \n')
+        create_menu_db_table('뚝배기코너', '석식', '휴무 \n')
 
     else:
         sang_trs = sang_table.find_all('tr')
@@ -236,6 +242,8 @@ def crawl(request):
     if gru_table.find(text="휴무"):
         create_menu_db_table('A코너', '중식', '휴무 \n')
         create_menu_db_table('B코너', '중식', '휴무 \n')
+        create_menu_db_table('A코너', '석식', '휴무 \n')
+        create_menu_db_table('B코너', '석식', '휴무 \n')
 
     else:
         gru_trs = gru_table.find_all('tr')
@@ -273,6 +281,8 @@ def crawl(request):
     if dorm_table.find(text="휴무"):
         create_menu_db_table('기숙사A코너', '중식', '휴무 \n')
         create_menu_db_table('기숙사B코너', '중식', '휴무 \n')
+        create_menu_db_table('기숙사A코너', '석식', '휴무 \n')
+        create_menu_db_table('기숙사B코너', '석식', '휴무 \n')
 
     else:
         # 중식이 검색이 안되는 문제 발생... 일단 원래 방법으로 구현해놓음
