@@ -22,22 +22,9 @@ def answer(request):
 
     today = datetime.date.today()
     today_date = today.strftime("%m월 %d일")
-    today_weekday = today.isoweekday()
     hour_now = datetime.datetime.now().hour
 
-    if today_weekday >= 6:
-        create_log("주말요청")
-        return JsonResponse({
-            'message':{
-                'text': '죄송합니다 주말에는 서비스를 제공하지 않습니다.'
-            },
-            'keyboard':{
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
-            }
-        })
-
-    elif hour_now >= 15:
+    if hour_now >= 15:
         return JsonResponse({
             'message':{
                 'text': today_date + '의 ' + cafeteria_name + '의 저녁메뉴 입니다. \n \n' + get_dinner_menu(cafeteria_name)
