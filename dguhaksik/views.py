@@ -63,7 +63,7 @@ def get_lunch_menu(cafeteria_name):
 
     elif cafeteria_name == '그루터기':
         gru_a_lunch = Menu.objects.get(cafe_name='A코너', time='중식').menu
-        gru_b_lunch = Menu.objects.get(cafe_name='B코너', time='석식').menu
+        gru_b_lunch = Menu.objects.get(cafe_name='B코너', time='중식').menu
 
         return "============\n중식\n============\n"\
                + "A코너 \n" + gru_a_lunch \
