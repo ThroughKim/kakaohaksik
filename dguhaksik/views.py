@@ -1,3 +1,4 @@
+from django.template.response import TemplateResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from dguhaksik.models import Menu, Log
@@ -335,3 +336,10 @@ def flush_menu_db():
 
 #curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "가든쿡"}'
 #curl -XGET 'http://127.0.0.1:8000/crawl/'
+
+
+def analysis(request):
+
+    context = {}
+
+    return TemplateResponse(request, "index.html", context)
