@@ -27,9 +27,16 @@
 
     <div class="main-contents">
         <div class="label">
-            전체요청횟수
+            요청횟수 변화 추이
         </div>
         <div id="total-request-chart"></div>
+    </div>
+
+    <div class="main-contents">
+        <div class="label">
+            7일간 요청횟수
+       </div>
+        <div id="seven-days-request-chart"></div>
     </div>
 
     <div class="main-contents">
@@ -60,10 +67,18 @@
 <script type="text/javascript">
     $(document).ready( function () {
         var date_list_for_x_axis = {{ date_pack|safe }}
-        var total_request_data = {{ total_request_data|safe }}
 
         var total_request_chart = c3.generate({
             bindto: '#total-request-chart',
+            data: {
+                columns: [
+                    {{ total_request_data.zero_data|safe }}
+                ]
+            }
+        });
+
+        var seven_days_request_chart = c3.generate({
+            bindto: '#seven-days-request-chart',
             data: {
                 x: 'x',
                 columns: [
@@ -75,7 +90,7 @@
                 x: {
                     type: 'timeseries',
                     tick: {
-                        format: '%d'
+                        format: '%d일'
                     }
                 }
             }
@@ -87,14 +102,17 @@
                 x: 'x',
                 columns: [
                     date_list_for_x_axis,
-                    ['data2', 50, 20, 10, 40, 15, 25, 10]
+                    ['상록원', 0, 0, 0, 0, 0, 0, 0 ],
+                    ['그루터기', 0, 0, 0, 0, 0, 0, 0 ],
+                    ['기숙사식당', 0, 0, 0, 0, 0, 0, 0 ],
+                    ['교직원식당', 0, 0, 0, 0, 0, 0, 0 ]
                 ]
             },
             axis: {
                 x: {
                     type: 'timeseries',
                     tick: {
-                        format: '%d'
+                        format: '%d일'
                     }
                 }
             }
@@ -123,10 +141,25 @@
         setTimeout( function () {
             total_request_chart.load({
                 columns:[
-                    total_request_data
+                    {{ total_request_data.total_request_data|safe }}
                 ]
             });
-        }, 1000);
+            seven_days_request_chart.load({
+                columns:[
+                    {{ seven_days_request_data|safe }}
+                ]
+            });
+            request_by_cafe_chart.load({
+                columns:[
+                    {{ request_data_by_cafe.cnt_sang|safe }},
+                    {{ request_data_by_cafe.cnt_gru|safe }},
+                    {{ request_data_by_cafe.cnt_kyo|safe }},
+                    {{ request_data_by_cafe.cnt_dorm|safe }}
+                ]
+            });
+
+            }, 750
+        );
 
     });
 </script>

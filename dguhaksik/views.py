@@ -343,13 +343,20 @@ def analysis(request):
     context = {}
     context['date_pack'] = get_date_pack()
     context['total_request_data'] = get_total_request_data()
+    context['seven_days_request_data'] = get_seven_days_request_data()
+    context['request_data_by_cafe'] = get_request_data_by_cafe()
 
     return TemplateResponse(request, "index.html", context)
 
 
+def get_today_date():
+
+    return datetime.date.today()
+
+
 def get_date_pack():
     days = 7
-    today_date = datetime.date.today()
+    today_date = get_today_date()
     date_pack = ['x']
 
     for i in reversed(range(days)):
@@ -362,8 +369,29 @@ def get_date_pack():
 
 
 def get_total_request_data():
+    today_date = get_today_date()
+    days_since_open = (today_date - datetime.date(2016, 10, 19)).days
+    zero_data = ['요청횟수']
+    total_request_data = ['요청횟수']
+
+    for i in reversed(range(days_since_open)):
+        total_request_data.append(
+            Log.objects.filter(
+                timestamp__range=[today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i)]
+            ).count()
+        )
+        zero_data.append(0)
+
+    return dict(
+        total_request_data=total_request_data,
+        zero_data=zero_data,
+    )
+
+
+def get_seven_days_request_data():
     days = 7
-    today_date_day = datetime.date.today().day
+    today_date_day = get_today_date().day
     cnt_request = ['요청횟수']
 
     for i in reversed(range(days)):
@@ -374,3 +402,46 @@ def get_total_request_data():
         )
 
     return cnt_request
+
+
+def get_request_data_by_cafe():
+    days = 7
+    today_date_day = get_today_date().day
+    cnt_sang = ['상록원']
+    cnt_gru = ['그루터기']
+    cnt_dorm = ['기숙사식당']
+    cnt_kyo = ['교직원식당']
+
+    for i in reversed(range(days)):
+        cnt_sang.append(
+            Log.objects.filter(
+                cafe_name='상록원',
+                timestamp__day=today_date_day - i
+            ).count()
+        )
+        cnt_gru.append(
+            Log.objects.filter(
+                cafe_name='그루터기',
+                timestamp__day=today_date_day - i
+            ).count()
+        )
+        cnt_dorm.append(
+            Log.objects.filter(
+                cafe_name='기숙사식당',
+                timestamp__day=today_date_day - i
+            ).count()
+        )
+        cnt_kyo.append(
+            Log.objects.filter(
+                cafe_name='교직원식당',
+                timestamp__day=today_date_day - i
+            ).count()
+        )
+
+    return dict(
+        cnt_gru=cnt_gru,
+        cnt_sang=cnt_sang,
+        cnt_dorm=cnt_dorm,
+        cnt_kyo=cnt_kyo
+    )
+
