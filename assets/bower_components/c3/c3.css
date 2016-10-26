@@ -1,7 +1,8 @@
 /*-- Chart --*/
 .c3 svg {
   font: 10px sans-serif;
-  -webkit-tap-highlight-color: transparent; }
+  -webkit-tap-highlight-color: transparent;
+  width: 100%; }
 
 .c3 path, .c3 line {
   fill: none;

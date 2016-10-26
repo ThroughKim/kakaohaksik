@@ -41,4 +41,10 @@ div.main-contents{
     max-width: 600px;
     margin-bottom: 20px;
     padding: 24px 24px;
+    flex-direction: column;
+}
+
+div.label{
+    margin-left: 1em;
+    margin-bottom: 15px;
 }
