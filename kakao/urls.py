@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^keyboard/', 'dguhaksik.views.keyboard'),
     url(r'^message', 'dguhaksik.views.answer'),
     url(r'^crawl/', 'dguhaksik.views.crawl'),
-    url(r'^', 'dguhaksik.views.analysis'),
+    url(r'^analysis/', 'dguhaksik.views.analysis'),
 ]
