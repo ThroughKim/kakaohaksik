@@ -341,5 +341,21 @@ def flush_menu_db():
 def analysis(request):
 
     context = {}
+    context['total_request_data'] = get_total_request_data()
 
     return TemplateResponse(request, "index.html", context)
+
+
+def get_total_request_data():
+    days = 7
+    today_date_day = datetime.date.today().day
+    cnt_request = ['Request']
+
+    for i in range(days):
+        cnt_request.append(
+            Log.objects.filter(
+                timestamp__day = today_date_day - i
+            ).count()
+        )
+
+    return cnt_request
