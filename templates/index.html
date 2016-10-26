@@ -27,18 +27,16 @@
 
     <div class="main-contents">
         <div class="label">
-            전체요청횟수{{ total_request_data }}
+            전체요청횟수
         </div>
-
-        <div id="chart1"></div>
+        <div id="total-request-chart"></div>
     </div>
 
     <div class="main-contents">
         <div class="label">
             식당별요청횟수
         </div>
-
-        <div id="chart1"></div>
+        <div id="request-by-cafe-chart"></div>
     </div>
 
     <div class="main-contents">
@@ -61,15 +59,47 @@
 </body>
 <script type="text/javascript">
     $(document).ready( function () {
-        var chart1 = c3.generate({
-            bindto: '#chart1',
+        var date_list_for_x_axis = {{ date_pack|safe }}
+        var total_request_data = {{ total_request_data|safe }}
+
+        var total_request_chart = c3.generate({
+            bindto: '#total-request-chart',
             data: {
+                x: 'x',
                 columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 50, 20, 10, 40, 15, 25]
+                    date_list_for_x_axis,
+                    ['요청횟수', 0, 0, 0, 0, 0, 0, 0 ]
                 ]
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d'
+                    }
+                }
             }
-        })
+        });
+
+        var request_by_cafe_chart = c3.generate({
+            bindto: '#request-by-cafe-chart',
+            data: {
+                x: 'x',
+                columns: [
+                    date_list_for_x_axis,
+                    ['data2', 50, 20, 10, 40, 15, 25, 10]
+                ]
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d'
+                    }
+                }
+            }
+        });
+
         var chart2 = c3.generate({
             bindto: '#chart2',
             data: {
@@ -78,7 +108,8 @@
                     ['data2', 50, 20, 10, 40, 15, 25]
                 ]
             }
-        })
+        });
+
         var chart3 = c3.generate({
             bindto: '#chart3',
             data: {
@@ -88,6 +119,15 @@
                 ]
             }
         })
+
+        setTimeout( function () {
+            total_request_chart.load({
+                columns:[
+                    total_request_data
+                ]
+            });
+        }, 1000);
+
     });
 </script>
 </html>

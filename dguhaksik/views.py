@@ -341,17 +341,32 @@ def flush_menu_db():
 def analysis(request):
 
     context = {}
+    context['date_pack'] = get_date_pack()
     context['total_request_data'] = get_total_request_data()
 
     return TemplateResponse(request, "index.html", context)
 
 
+def get_date_pack():
+    days = 7
+    today_date = datetime.date.today()
+    date_pack = ['x']
+
+    for i in reversed(range(days)):
+        date = today_date - datetime.timedelta(days=i)
+        date_pack.append(
+            date.strftime('%Y-%m-%d')
+        )
+
+    return date_pack
+
+
 def get_total_request_data():
     days = 7
     today_date_day = datetime.date.today().day
-    cnt_request = ['Request']
+    cnt_request = ['요청횟수']
 
-    for i in range(days):
+    for i in reversed(range(days)):
         cnt_request.append(
             Log.objects.filter(
                 timestamp__day = today_date_day - i
