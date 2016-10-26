@@ -45,20 +45,22 @@
         </div>
         <div id="request-by-cafe-chart"></div>
     </div>
+    
+    <div class="main-contents">
+        <div class="label">
+            중식 석식 요청 횟수
+        </div>
+        <div id="request-by-time-chart"></div>
+    </div>
 
     <div class="main-contents">
         <div class="label">
             요일별 요청횟수
         </div>
-        <div id="chart2"></div>
+        <div id="request-by-weekday-chart"></div>
     </div>
 
-    <div class="main-contents">
-        <div class="label">
-            중식 석식 요청 횟수
-        </div>
-        <div id="chart3"></div>
-    </div>
+
 
 </div>
 
@@ -118,25 +120,44 @@
             }
         });
 
-        var chart2 = c3.generate({
-            bindto: '#chart2',
+        var request_by_weekday_chart = c3.generate({
+            bindto: '#request-by-weekday-chart',
             data: {
                 columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 50, 20, 10, 40, 15, 25]
-                ]
+                    ['요청횟수', 0, 0, 0, 0, 0, 0, 0]
+                ],
+                type: 'bar'
+            },
+            bar: {
+                width: 20
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    categories: ['일', '월', '화', '수', '목', '금', '토']
+                }
             }
         });
 
-        var chart3 = c3.generate({
-            bindto: '#chart3',
+        var request_by_time_chart = c3.generate({
+            bindto: '#request-by-time-chart',
             data: {
+                x: 'x',
                 columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 50, 20, 10, 40, 15, 25]
+                    date_list_for_x_axis,
+                    ['중식', 0, 0, 0, 0, 0, 0, 0],
+                    ['석식', 0, 0, 0, 0, 0, 0, 0]
                 ]
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d일'
+                    }
+                }
             }
-        })
+        });
 
         setTimeout( function () {
             total_request_chart.load({
@@ -155,6 +176,18 @@
                     {{ request_data_by_cafe.cnt_gru|safe }},
                     {{ request_data_by_cafe.cnt_kyo|safe }},
                     {{ request_data_by_cafe.cnt_dorm|safe }}
+                ]
+            });
+            request_by_weekday_chart.load({
+                columns:[
+                    {{ weekday_request_data|safe }}
+                ]
+            });
+
+            request_by_time_chart.load({
+                columns:[
+                    {{ request_by_time_data.cnt_lunch|safe }},
+                    {{ request_by_time_data.cnt_dinner|safe }}
                 ]
             });
 

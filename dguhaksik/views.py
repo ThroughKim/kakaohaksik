@@ -345,6 +345,8 @@ def analysis(request):
     context['total_request_data'] = get_total_request_data()
     context['seven_days_request_data'] = get_seven_days_request_data()
     context['request_data_by_cafe'] = get_request_data_by_cafe()
+    context['weekday_request_data'] = get_weekday_request_data()
+    context['request_by_time_data'] = get_time_request_data()
 
     return TemplateResponse(request, "index.html", context)
 
@@ -445,3 +447,40 @@ def get_request_data_by_cafe():
         cnt_kyo=cnt_kyo
     )
 
+
+def get_weekday_request_data():
+    weekday_request_data = ['요청횟수']
+    for i in range(1,8):
+        weekday_request_data.append(
+            Log.objects.filter(
+                timestamp__week_day=i
+            ).count()
+        )
+
+    return weekday_request_data
+
+
+def get_time_request_data():
+    days=7
+    today_date_day = get_today_date().day
+    cnt_lunch = ['중식']
+    cnt_dinner = ['석식']
+
+    for i in reversed(range(days)):
+        cnt_lunch.append(
+            Log.objects.filter(
+                timestamp__day=today_date_day - i,
+                timestamp__hour__lt = 15
+            ).count()
+        )
+        cnt_dinner.append(
+            Log.objects.filter(
+                timestamp__day=today_date_day - i,
+                timestamp__hour__gte=15
+            ).count()
+        )
+
+    return dict(
+        cnt_lunch=cnt_lunch,
+        cnt_dinner=cnt_dinner
+    )
