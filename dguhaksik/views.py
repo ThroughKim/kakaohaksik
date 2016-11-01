@@ -393,13 +393,14 @@ def get_total_request_data():
 
 def get_seven_days_request_data():
     days = 7
-    today_date_day = get_today_date().day
+    today_date = get_today_date()
     cnt_request = ['요청횟수']
 
     for i in reversed(range(days)):
         cnt_request.append(
             Log.objects.filter(
-                timestamp__day = today_date_day - i
+                timestamp__range = (today_date - datetime.timedelta(days=i),
+                                    today_date + datetime.timedelta(days=1-i))
             ).count()
         )
 
@@ -408,7 +409,7 @@ def get_seven_days_request_data():
 
 def get_request_data_by_cafe():
     days = 7
-    today_date_day = get_today_date().day
+    today_date = get_today_date()
     cnt_sang = ['상록원']
     cnt_gru = ['그루터기']
     cnt_dorm = ['기숙사식당']
@@ -418,25 +419,29 @@ def get_request_data_by_cafe():
         cnt_sang.append(
             Log.objects.filter(
                 cafe_name='상록원',
-                timestamp__day=today_date_day - i
+                timestamp__range=(today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
         cnt_gru.append(
             Log.objects.filter(
                 cafe_name='그루터기',
-                timestamp__day=today_date_day - i
+                timestamp__range=(today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
         cnt_dorm.append(
             Log.objects.filter(
                 cafe_name='기숙사식당',
-                timestamp__day=today_date_day - i
+                timestamp__range=(today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
         cnt_kyo.append(
             Log.objects.filter(
                 cafe_name='교직원식당',
-                timestamp__day=today_date_day - i
+                timestamp__range=(today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
 
@@ -462,20 +467,22 @@ def get_weekday_request_data():
 
 def get_time_request_data():
     days=7
-    today_date_day = get_today_date().day
+    today_date = get_today_date()
     cnt_lunch = ['중식']
     cnt_dinner = ['석식']
 
     for i in reversed(range(days)):
         cnt_lunch.append(
             Log.objects.filter(
-                timestamp__day=today_date_day - i,
+                timestamp__range=(today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i)),
                 timestamp__hour__lt = 15
             ).count()
         )
         cnt_dinner.append(
             Log.objects.filter(
-                timestamp__day=today_date_day - i,
+                timestamp__range=(today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i)),
                 timestamp__hour__gte=15
             ).count()
         )
