@@ -346,6 +346,7 @@ def analysis(request):
     context['seven_days_request_data'] = get_seven_days_request_data()
     context['request_data_by_cafe'] = get_request_data_by_cafe()
     context['weekday_request_data'] = get_weekday_request_data()
+    context['hourly_request_data'] = get_hourly_request_data()
     context['request_by_time_data'] = get_time_request_data()
 
     return TemplateResponse(request, "index.html", context)
@@ -463,6 +464,18 @@ def get_weekday_request_data():
         )
 
     return weekday_request_data
+
+
+def get_hourly_request_data():
+    hourly_request_data = ['요청횟수']
+    for i in range(24):
+        hourly_request_data.append(
+            Log.objects.filter(
+                timestamp__hour=i
+            ).count()
+        )
+
+    return hourly_request_data
 
 
 def get_time_request_data():
