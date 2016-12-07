@@ -132,9 +132,9 @@ def crawl(request):
 
     #메뉴 테이블 추출
     html = urlopen('http://dgucoop.dongguk.edu/store/store.php?w=4&l=1')
-    source = html.read()
+    source = html.read().decode('cp949', 'ignore')
     html.close()
-    soup = BeautifulSoup(source, "html.parser")
+    soup = BeautifulSoup(source, "html.parser", from_encoding='utf-8')
     table_div = soup.find(id="sdetail")
     menu_tables = table_div.table.tr.td.p.find_all('table', {"bgcolor": "#CDD6B5"})
 
