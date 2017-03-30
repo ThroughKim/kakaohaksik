@@ -509,29 +509,30 @@ def get_time_request_data():
     )
 
 def mail_to_me():
-    text = "오늘의 메뉴 \n"
-    text += get_lunch_menu("상록원")
-    text += get_lunch_menu("그루터기")
-    text += get_lunch_menu("기숙사식당")
-    text += get_lunch_menu("교직원식당")
-    text += "+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+"
-    text += get_dinner_menu("상록원")
-    text += get_dinner_menu("그루터기")
-    text += get_dinner_menu("기숙사식당")
-    text += get_dinner_menu("교직원식당")
-
-
-    mail_addr = 'sulewoo58@gmail.com'
-    msg = MIMEText(text)
-
-    # me == 보내는 사람의 이메일 주소
-    # you == 받는 사람의 이메일 주소
-    msg['Subject'] = "크롤링 결과보고"  # 이메일 제목
-    msg['From'] = mail_addr
-    msg['To'] = mail_addr
-
-    # 로컬 SMTP 서버가 없을 경우 계정이 있는 다른 서버를 사용하면 된다.
-    s = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-    s.login("sulewoo59", "test123!@#")
-    s.sendmail('sulewoo59@gmail.com', mail_addr, msg.as_string())
-    s.quit()
+    pass
+    # text = "오늘의 메뉴 \n"
+    # text += get_lunch_menu("상록원")
+    # text += get_lunch_menu("그루터기")
+    # text += get_lunch_menu("기숙사식당")
+    # text += get_lunch_menu("교직원식당")
+    # text += "+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+"
+    # text += get_dinner_menu("상록원")
+    # text += get_dinner_menu("그루터기")
+    # text += get_dinner_menu("기숙사식당")
+    # text += get_dinner_menu("교직원식당")
+    #
+    #
+    # mail_addr = 'sulewoo58@gmail.com'
+    # msg = MIMEText(text)
+    #
+    # # me == 보내는 사람의 이메일 주소
+    # # you == 받는 사람의 이메일 주소
+    # msg['Subject'] = "크롤링 결과보고"  # 이메일 제목
+    # msg['From'] = mail_addr
+    # msg['To'] = mail_addr
+    #
+    # # 로컬 SMTP 서버가 없을 경우 계정이 있는 다른 서버를 사용하면 된다.
+    # s = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    # s.login("sulewoo59", "test123!@#")
+    # s.sendmail('sulewoo59@gmail.com', mail_addr, msg.as_string())
+    # s.quit()
