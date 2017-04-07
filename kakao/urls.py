@@ -7,4 +7,6 @@ urlpatterns = [
     url(r'^message', 'dguhaksik.views.answer'),
     url(r'^crawl/', 'dguhaksik.views.crawl'),
     url(r'^analysis/', 'dguhaksik.views.analysis'),
+    url(r'^lda/', 'dguhaksik.views.lda'),
+    url(r'^viewer/', 'dguhaksik.views.lda_view'),
 ]

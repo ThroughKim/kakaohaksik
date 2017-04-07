@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link href="{% static 'temp/lda.css' %}" rel="stylesheet">
+        <script src="{% static 'temp/d3.v3.js' %}" charset="utf-8"></script>
+        <script src="{% static 'temp/ldavis.js' %}" charset="utf-8"></script>
+
+        <title>LDAvis</title>
+    </head>
+
+    <body>
+        <div id = "lda"></div>
+        <script>
+            {% if set == 'top' %}
+                var vis = new LDAvis("#lda", "{% static 'temp/top_lda.json' %}");
+            {% elif set == 'low' %}
+                var vis = new LDAvis("#lda", "{% static 'temp/low_lda.json' %}");
+            {% elif set == 'total' %}
+                var vis = new LDAvis("#lda", "{% static 'temp/total_lda.json' %}");
+            {% endif %}
+        </script>
+    </body>
+
+</html>

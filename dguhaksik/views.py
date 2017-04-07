@@ -16,7 +16,6 @@ def keyboard(request):
         'buttons' : ['상록원', '그루터기', '기숙사식당', '교직원식당']
     })
 
-
 @csrf_exempt
 def answer(request):
     json_str = ((request.body).decode('utf-8'))
@@ -48,6 +47,20 @@ def answer(request):
                 'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
             }
         })
+
+
+def lda(request):
+    context = {}
+
+    return TemplateResponse(request, 'lda.html', context=context)
+
+def lda_view(request):
+    set = request.GET['set']
+
+    context = {}
+    context['set'] = set
+
+    return TemplateResponse(request, 'lda_view.html', context=context)
 
 
 def get_lunch_menu(cafeteria_name):
