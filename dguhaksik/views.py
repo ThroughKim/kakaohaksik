@@ -53,9 +53,16 @@ def answer(request):
             })
     else:
         return JsonResponse({
-             "message_button": {
+            'message': {
+                'text': '식당 운영 시간 확인하기'
+            },
+             'message_button': {
                 "label": "링크",
                 "url": "http://dgucoop.dongguk.edu/mobile/shop.html?code=1"
+            },
+            'keyboard': {
+                'type': 'buttons',
+                'buttons': button_list
             }
         })
 
