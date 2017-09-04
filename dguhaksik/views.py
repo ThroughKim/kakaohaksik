@@ -56,10 +56,6 @@ def answer(request):
             'message': {
                 'text': 'http://dgucoop.dongguk.edu/mobile/shop.html?code=1'
             },
-             'message_button': {
-                "label": "링크",
-                "url": "http://dgucoop.dongguk.edu/mobile/shop.html?code=1"
-            },
             'keyboard': {
                 'type': 'buttons',
                 'buttons': button_list
