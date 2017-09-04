@@ -8,12 +8,14 @@ import json, datetime
 import smtplib
 from email.mime.text import MIMEText
 
+button_list = ['상록원', '그루터기', '기숙사식당', '교직원식당', '식당시간']
+
 
 def keyboard(request):
 
     return JsonResponse({
         'type' : 'buttons',
-        'buttons' : ['상록원', '그루터기', '기숙사식당', '교직원식당']
+        'buttons' : button_list
     })
 
 @csrf_exempt
@@ -22,29 +24,38 @@ def answer(request):
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
 
-    today = datetime.date.today()
-    today_date = today.strftime("%m월 %d일")
-    hour_now = datetime.datetime.now().hour
+    if cafeteria_name != '식당시간':
 
-    if hour_now >= 15:
-        return JsonResponse({
-            'message':{
-                'text': today_date + '의 ' + cafeteria_name + '의 저녁메뉴 입니다. \n \n' + get_dinner_menu(cafeteria_name)
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
-            }
-        })
+        today = datetime.date.today()
+        today_date = today.strftime("%m월 %d일")
+        hour_now = datetime.datetime.now().hour
 
-    else :
+        if hour_now >= 15:
+            return JsonResponse({
+                'message':{
+                    'text': today_date + '의 ' + cafeteria_name + '의 저녁메뉴 입니다. \n \n' + get_dinner_menu(cafeteria_name)
+                },
+                'keyboard': {
+                    'type': 'buttons',
+                    'buttons': button_list
+                }
+            })
+
+        else :
+            return JsonResponse({
+                'message': {
+                    'text': today_date + '의 ' + cafeteria_name + '의 점심 메뉴입니다. \n \n' + get_lunch_menu(cafeteria_name)
+                },
+                'keyboard': {
+                    'type': 'buttons',
+                    'buttons': button_list
+                }
+            })
+    else:
         return JsonResponse({
-            'message': {
-                'text': today_date + '의 ' + cafeteria_name + '의 점심 메뉴입니다. \n \n' + get_lunch_menu(cafeteria_name)
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': ['상록원', '그루터기', '기숙사식당', '교직원식당']
+             "message_button": {
+                "label": "링크",
+                "url": "http://dgucoop.dongguk.edu/mobile/shop.html?code=1"
             }
         })
 
