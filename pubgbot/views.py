@@ -1,6 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from pypubg import core
+from pubgbot.models import Log
 import json
 
 
@@ -156,13 +157,15 @@ def answer(request):
         }
     })
 
-
 def get_user(username):
     api = core.PUBGAPI("b9c5327d-1598-4063-aa06-beb16798c369")
     user_info = api.player(username)
+
     if 'error' in user_info:
+        create_log("no_user_error")
         return "no_user"
     else:
+        create_log(username)
         return user_info
 
 def make_msg(type, match_cnt, rating, top_rating, rank, win_ratio, wins, top10 , kd, kill_pg, deal_pg, kill_streak, long_kill):
@@ -178,3 +181,8 @@ def make_msg(type, match_cnt, rating, top_rating, rank, win_ratio, wins, top10 ,
     msg += '최장거리킬: ' + long_kill + '\n\n'
 
     return msg
+
+def create_log(nickname):
+    Log.objects.create(
+        nickname = nickname
+    )
