@@ -88,7 +88,7 @@ def answer(request):
             expose_sq_stat[label] = val
 
     if len(expose_sol_stat) == 0:
-        solo_msg = "솔로 \n\n플레이 정보가 없습니다."
+        solo_msg = "솔로 \n\n플레이 정보가 없습니다.\n\n"
     else:
         solo_msg = make_msg(
             "솔로",
@@ -107,7 +107,7 @@ def answer(request):
         )
 
     if len(expose_duo_stat) == 0:
-        duo_msg = "듀오 \n\n플레이 정보가 없습니다."
+        duo_msg = "듀오 \n\n플레이 정보가 없습니다.\n\n"
     else:
         duo_msg = make_msg(
             "듀오",
@@ -126,7 +126,7 @@ def answer(request):
         )
 
     if len(expose_sq_stat) == 0:
-        sq_msg = "스쿼드 \n\n플레이 정보가 없습니다."
+        sq_msg = "스쿼드 \n\n플레이 정보가 없습니다.\n\n"
     else:
         sq_msg = make_msg(
             "스쿼드",
@@ -169,11 +169,15 @@ def get_user(username):
         return user_info
 
 def make_msg(type, match_cnt, rating, top_rating, rank, win_ratio, wins, top10 , kd, kill_pg, deal_pg, kill_streak, long_kill):
-    msg = type + ' ' + match_cnt + '게임 \n\n'
+
+p
+
+
+msg = type + ' ' + match_cnt + '게임 \n\n'
     msg += '레이팅: ' + rating + ' (최고 '+ top_rating +') \n'
     msg += '순위: ' + rank + '위\n'
     msg += '승률: ' + win_ratio + ' (치킨 ' + wins + '마리) \n'
-    msg += '탑텐: '+ top10 +'\n'
+dsddsd    msg += '탑텐: '+ top10 +'\n'
     msg += '킬뎃: ' + kd + '\n'
     msg += '평균킬: ' + kill_pg + '\n'
     msg += '평균딜: ' + deal_pg + '\n'
