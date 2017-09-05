@@ -1,7 +1,13 @@
 Django==1.9.7
 beautifulsoup4==4.4.1
 bs4==0.0.1
+certifi==2017.7.27.1
+chardet==3.0.4
 django-bower==5.2.0
 djangorestframework==3.3.3
+idna==2.6
+pypubg==0.1.5
 pytz==2016.7
+requests==2.18.4
 six==1.10.0
+urllib3==1.22
