@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^analysis/', 'dguhaksik.views.analysis'),
     url(r'^lda/', 'dguhaksik.views.lda'),
     url(r'^viewer/', 'dguhaksik.views.lda_view'),
+    url(r'^pubg/keyboard', 'pubgbot.views.keyboard'),
 ]
