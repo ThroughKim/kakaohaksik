@@ -7,6 +7,5 @@ from django.http import JsonResponse
 def keyboard(request):
 
     return JsonResponse({
-        'type' : 'buttons',
-        'buttons' : ['닉네임입력']
+        
     })
