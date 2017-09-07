@@ -150,10 +150,6 @@ def answer(request):
     return JsonResponse({
         'message': {
             'text': sending_msg
-        },
-        'keyboard': {
-            'type' : 'text',
-            'content': '닉네임을 입력해주세요.'
         }
     })
 
@@ -171,13 +167,13 @@ def get_user(username):
 def make_msg(type, match_cnt, rating, top_rating, rank, win_ratio, wins, top10 , kd, kill_pg, deal_pg, kill_streak, long_kill):
     msg = type + ' ' + match_cnt + '게임 \n\n'
     msg += '레이팅: ' + rating + ' (최고 '+ top_rating +') \n'
-    msg += '순위  : ' + rank + '위\n'
-    msg += '승률  : ' + win_ratio + ' (치킨 ' + wins + '마리) \n'
-    msg += '탑텐  : '+ top10 +'\n'
-    msg += '킬뎃  : ' + kd + '\n'
+    msg += '순위   : ' + rank + '위\n'
+    msg += '승률   : ' + win_ratio + ' (치킨 ' + wins + '마리) \n'
+    msg += '탑텐   : '+ top10 +'\n'
+    msg += '킬뎃   : ' + kd + '\n'
     msg += '평균킬: ' + kill_pg + '\n'
     msg += '평균딜: ' + deal_pg + '\n'
-    msg += '여포  : ' + kill_streak + '\n'
+    msg += '여포   : ' + kill_streak + '\n'
     msg += '최장거리킬: ' + long_kill + '\n\n'
 
     return msg
