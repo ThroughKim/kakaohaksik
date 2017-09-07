@@ -402,7 +402,7 @@ def get_date_pack():
 
 def get_total_request_data():
     today_date = get_today_date()
-    days_since_open = (today_date - datetime.date(2017, 2, 25)).days
+    days_since_open = (today_date - datetime.date(2017, 9, 1)).days
     zero_data = ['요청횟수']
     total_request_data = ['요청횟수']
 

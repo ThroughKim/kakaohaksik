@@ -30,7 +30,7 @@ def answer(request):
         "KillDeathRatio",
         "KillsPg",
         "DamagePg",
-        "MaxKillStreaks",
+        "RoundMostKills",
         "LongestKill",
 
     ]
@@ -102,7 +102,7 @@ def answer(request):
             expose_sol_stat['KillDeathRatio'],
             expose_sol_stat['KillsPg'],
             expose_sol_stat['DamagePg'],
-            expose_sol_stat['MaxKillStreaks'],
+            expose_sol_stat['RoundMostKills'],
             expose_sol_stat['LongestKill'],
         )
 
@@ -121,7 +121,7 @@ def answer(request):
             expose_duo_stat['KillDeathRatio'],
             expose_duo_stat['KillsPg'],
             expose_duo_stat['DamagePg'],
-            expose_duo_stat['MaxKillStreaks'],
+            expose_duo_stat['RoundMostKills'],
             expose_duo_stat['LongestKill'],
         )
 
@@ -140,7 +140,7 @@ def answer(request):
             expose_sq_stat['KillDeathRatio'],
             expose_sq_stat['KillsPg'],
             expose_sq_stat['DamagePg'],
-            expose_sq_stat['MaxKillStreaks'],
+            expose_sq_stat['RoundMostKills'],
             expose_sq_stat['LongestKill'],
         )
 
