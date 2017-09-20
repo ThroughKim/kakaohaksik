@@ -114,7 +114,8 @@
                     ['상록원', 0, 0, 0, 0, 0, 0, 0 ],
                     ['그루터기', 0, 0, 0, 0, 0, 0, 0 ],
                     ['기숙사식당', 0, 0, 0, 0, 0, 0, 0 ],
-                    ['교직원식당', 0, 0, 0, 0, 0, 0, 0 ]
+                    ['교직원식당', 0, 0, 0, 0, 0, 0, 0 ],
+                    ['랜덤', 0, 0, 0, 0, 0, 0, 0 ]
                 ]
             },
             axis: {
@@ -201,7 +202,8 @@
                     {{ request_data_by_cafe.cnt_sang|safe }},
                     {{ request_data_by_cafe.cnt_gru|safe }},
                     {{ request_data_by_cafe.cnt_kyo|safe }},
-                    {{ request_data_by_cafe.cnt_dorm|safe }}
+                    {{ request_data_by_cafe.cnt_dorm|safe }},
+                    {{ request_data_by_cafe.cnt_rand|safe }}
                 ]
             });
             request_by_weekday_chart.load({

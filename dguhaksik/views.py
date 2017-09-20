@@ -507,6 +507,7 @@ def get_request_data_by_cafe():
     cnt_gru = ['그루터기']
     cnt_dorm = ['기숙사식당']
     cnt_kyo = ['교직원식당']
+    cnt_rand = ['랜덤']
 
     for i in reversed(range(days)):
         cnt_sang.append(
@@ -537,12 +538,20 @@ def get_request_data_by_cafe():
                                   today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
+        cnt_rand.append(
+            Log.objects.filter(
+                cafe_name__contains='rand',
+                timestamp__range=(today_date - datetime.timedelta(days=i),
+                                  today_date + datetime.timedelta(days=1 - i))
+            ).count()
+        )
 
     return dict(
         cnt_gru=cnt_gru,
         cnt_sang=cnt_sang,
         cnt_dorm=cnt_dorm,
-        cnt_kyo=cnt_kyo
+        cnt_kyo=cnt_kyo,
+        cnt_rand=cnt_rand
     )
 
 
