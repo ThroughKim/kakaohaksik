@@ -25,7 +25,7 @@ def answer(request):
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
 
-    if cafeteria_name != '식당시간' and cafeteria_name != "뭐먹지":
+    if cafeteria_name != '식당시간' and cafeteria_name != "뭐먹지?":
 
         today = datetime.date.today()
         today_date = today.strftime("%m월 %d일")
@@ -52,7 +52,7 @@ def answer(request):
                     'buttons': button_list
                 }
             })
-    elif cafeteria_name == "뭐먹지":
+    elif cafeteria_name == "뭐먹지?":
         hour_now = datetime.datetime.now().hour
 
         if hour_now >= 15:
@@ -179,6 +179,7 @@ def get_dinner_menu(cafeteria_name):
     else:
         return "존재하지 않는 식당이거나 오류 발생중입니다."
 
+
 def get_random_menu(time):
     if time == "dinner":
         cafe_name_list_dinner = [
@@ -195,9 +196,10 @@ def get_random_menu(time):
         ]
         random_corner = random.choice(cafe_name_list_lunch)
         corner_name = get_cafe_name_by_corner(random_corner)
-        menu = Menu.objects.get(cafe_name=random_corner, time='석식')
+        menu = Menu.objects.get(cafe_name=random_corner, time='중식').menu
 
         return corner_name + "\n" + menu
+
 
 def get_cafe_name_by_corner(corner):
     return {
@@ -422,7 +424,7 @@ def flush_menu_db():
     menu_db.delete()
 
 
-#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "가든쿡"}'
+#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "뭐먹지?"}'
 #curl -XGET 'http://127.0.0.1:8000/crawl/'
 
 
