@@ -187,7 +187,7 @@ def get_random_menu(time):
         ]
         random_corner = random.choice(cafe_name_list_dinner)
         corner_name = get_cafe_name_by_corner(random_corner)
-        menu = Menu.objects.get(cafe_name=random_corner, time='석식')
+        menu = Menu.objects.get(cafe_name=random_corner, time='석식').menu
         create_log("rand " + random_corner)
 
         return corner_name + '\n' + menu
