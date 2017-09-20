@@ -174,7 +174,7 @@ def make_msg(type, match_cnt, rating, top_rating, rank, win_ratio, wins, top10 ,
     msg += '평균킬: ' + kill_pg + '\n'
     msg += '평균딜: ' + deal_pg + '\n'
     msg += '여포   : ' + kill_streak + '\n'
-    msg += '최장거리킬: ' + long_kill + '\n\n'
+    msg += '최장거리킬: ' + long_kill + '\n\n\n'
 
     return msg
 

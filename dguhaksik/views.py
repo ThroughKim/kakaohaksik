@@ -6,9 +6,10 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import json, datetime
 import smtplib
+import random
 from email.mime.text import MIMEText
 
-button_list = ['상록원', '그루터기', '기숙사식당', '교직원식당', '식당시간']
+button_list = ['상록원', '그루터기', '기숙사식당', '교직원식당', '뭐먹지?', '식당시간']
 
 
 def keyboard(request):
@@ -24,7 +25,7 @@ def answer(request):
     received_json_data = json.loads(json_str)
     cafeteria_name = received_json_data['content']
 
-    if cafeteria_name != '식당시간':
+    if cafeteria_name != '식당시간' and cafeteria_name != "뭐먹지":
 
         today = datetime.date.today()
         today_date = today.strftime("%m월 %d일")
@@ -51,6 +52,30 @@ def answer(request):
                     'buttons': button_list
                 }
             })
+    elif cafeteria_name == "뭐먹지":
+        hour_now = datetime.datetime.now().hour
+
+        if hour_now >= 15:
+            return JsonResponse({
+                'message': {
+                    'text': '저녁 식사로 다음 메뉴 어떠세요? \n \n' + get_random_menu("dinner")
+                },
+                'keyboard': {
+                    'type': 'buttons',
+                    'buttons': button_list
+                }
+            })
+        else:
+            return JsonResponse({
+                'message': {
+                    'text': '점심 식사로 다음 메뉴 어떠세요? \n \n' + get_random_menu("launch")
+                },
+                'keyboard': {
+                    'type': 'buttons',
+                    'buttons': button_list
+                }
+            })
+
     else:
         return JsonResponse({
             'message': {
@@ -153,6 +178,40 @@ def get_dinner_menu(cafeteria_name):
 
     else:
         return "존재하지 않는 식당이거나 오류 발생중입니다."
+
+def get_random_menu(time):
+    if time == "dinner":
+        cafe_name_list_dinner = [
+            "A코너", "B코너", "기숙사A코너", "뚝배기코너", "양식코너", "일품코너", "집밥"
+        ]
+        random_corner = random.choice(cafe_name_list_dinner)
+        corner_name = get_cafe_name_by_corner(random_corner)
+        menu = Menu.objects.get(cafe_name=random_corner, time='석식')
+
+        return corner_name + "\n" + menu
+    else:
+        cafe_name_list_lunch = [
+            "A코너", "B코너", "기숙사A코너", "기숙사B코너", "뚝배기코너", "백반코너", "양식코너", "일품코너", "집밥", "한그릇"
+        ]
+        random_corner = random.choice(cafe_name_list_lunch)
+        corner_name = get_cafe_name_by_corner(random_corner)
+        menu = Menu.objects.get(cafe_name=random_corner, time='석식')
+
+        return corner_name + "\n" + menu
+
+def get_cafe_name_by_corner(corner):
+    return {
+        'A코너': '그루터기 A코너',
+        'B코너': '그루터기 B코너',
+        '기숙사A코너': '기숙사식당 A코너',
+        '기숙사B코너': '기숙사식당 B코너',
+        '뚝배기코너': '상록원 뚝배기코너',
+        '백반코너': '상록원 백반코너',
+        '양식코너': '상록원 양식코너',
+        '일품코너': '상록원 일품코너',
+        '집밥': '교직원식당 집밥코너',
+        '한그릇': '교직원식당 한그릇코너'
+    }.get(corner, 'None')
 
 
 def crawl(request):
