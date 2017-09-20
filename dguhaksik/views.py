@@ -189,7 +189,7 @@ def get_random_menu(time):
         corner_name = get_cafe_name_by_corner(random_corner)
         menu = Menu.objects.get(cafe_name=random_corner, time='석식')
 
-        return corner_name + "\n" + menu
+        return corner_name + menu
     else:
         cafe_name_list_lunch = [
             "A코너", "B코너", "기숙사A코너", "기숙사B코너", "뚝배기코너", "백반코너", "양식코너", "일품코너", "집밥", "한그릇"
@@ -198,7 +198,7 @@ def get_random_menu(time):
         corner_name = get_cafe_name_by_corner(random_corner)
         menu = Menu.objects.get(cafe_name=random_corner, time='중식').menu
 
-        return corner_name + "\n" + menu
+        return corner_name + menu
 
 
 def get_cafe_name_by_corner(corner):
