@@ -101,7 +101,7 @@ def search_user_info(username):
 
 
 def make_msg(type, stats):
-    if stats.rounds_played == 0:
+    if stats.rounds_played == '0':
         return type + " \n\n플레이 정보가 없습니다.\n\n"
     else:
         msg = type + ' ' + stats.rounds_played + '게임 \n\n'
