@@ -31,6 +31,7 @@ def answer(request):
                 'type': 'text',
                 'content': "닉네임을 입력해주세요."
             }
+        })
 
     #유저명 검색
     user_info = search_user_info(username)
