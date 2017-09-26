@@ -22,6 +22,16 @@ def answer(request):
     received_json_data = json.loads(json_str)
     username = received_json_data['content']
 
+    if username == "다른계정":
+        return JsonResponse({
+            'message': {
+                'text': "닉네임을 입력해주세요."
+            },
+            'keyboard': {
+                'type': 'text',
+                'content': "닉네임을 입력해주세요."
+            }
+
     #유저명 검색
     user_info = search_user_info(username)
     # DB에 없는 유저정보
@@ -33,7 +43,7 @@ def answer(request):
             },
             'keyboard': {
                 'type': 'buttons',
-                'buttons': [username]
+                'buttons': [username, "다른계정"]
             }
         })
     #유저명 있을 경우
@@ -51,7 +61,7 @@ def answer(request):
                 },
                 'keyboard': {
                     'type': 'buttons',
-                    'buttons': [username]
+                    'buttons': [username, "다른계정"]
                 }
             })
         else:
