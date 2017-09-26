@@ -83,6 +83,10 @@ def answer(request):
             return JsonResponse({
                 'message': {
                     'text': sending_msg
+                },
+                'keyboard': {
+                    'type': 'buttons',
+                    'buttons': [username, "다른계정"]
                 }
             })
 
