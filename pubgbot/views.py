@@ -21,7 +21,6 @@ def answer(request):
     json_str = ((request.body).decode('utf-8'))
     received_json_data = json.loads(json_str)
     username = received_json_data['content']
-    sending_msg = ""
 
     #유저명 검색
     user_info = search_user_info(username)
@@ -34,7 +33,7 @@ def answer(request):
             },
             'keyboard': {
                 'type': 'buttons',
-                'buttons': username
+                'buttons': [username]
             }
         })
     #유저명 있을 경우
@@ -52,7 +51,7 @@ def answer(request):
                 },
                 'keyboard': {
                     'type': 'buttons',
-                    'buttons': username
+                    'buttons': [username]
                 }
             })
         else:
