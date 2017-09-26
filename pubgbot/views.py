@@ -52,9 +52,9 @@ def answer(request):
         now  = datetime.now()
         time_gap = timedelta(minutes=1)
         db_time = localtime(user_info.timestamp)
-        if db_time.date() == now.date() and db_time.time() < (now - time_gap).time() :
+        if db_time < (now-time_gap):
+        # if db_time.date() == now.date() and db_time.time() < (now - time_gap).time() :
             # 시간 not_ok일 경우 api콜
-            print(username + " 너무오래댐")
             tasks.get_user(username)
             return JsonResponse({
                 'message': {
