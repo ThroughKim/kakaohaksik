@@ -29,7 +29,7 @@ def answer(request):
         tasks.get_user(username)
         return JsonResponse({
             'message': {
-                'text': "전적 정보 업데이트 중입니다. 잠시 후 다시 시도해주세요. 존재하지 않는 계정의 경우 업데이트되지 않습니다."
+                'text': "전적 정보 업데이트 중입니다. 잠시 후 다시 시도해주세요. \n존재하지 않는 계정의 경우 업데이트되지 않습니다."
             },
             'keyboard': {
                 'type': 'buttons',
