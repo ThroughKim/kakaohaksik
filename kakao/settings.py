@@ -134,4 +134,4 @@ STATIC_URL = '/static/'
 import djcelery
 
 djcelery.setup_loader()
-BROKER_URL = "amqp://guest:guest@localhost:5672//"
+BROKER_URL = "amqp://test:1234@localhost:5672//"
