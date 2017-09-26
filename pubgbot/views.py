@@ -47,34 +47,6 @@ def answer(request):
                 'buttons': [username, "다른계정"]
             }
         })
-    #에러유저일경우
-    elif user_info.user_name == "no_user_error":
-        now = datetime.now()
-        time_gap = timedelta(hours=6)
-        db_time = localtime(user_info.timestamp)
-
-        if db_time > now-time_gap:
-            tasks.get_user(username)
-            return JsonResponse({
-                'message': {
-                    'text': "전적 정보 업데이트 중입니다. 잠시 후 다시 시도해주세요. \n존재하지 않는 계정의 경우 업데이트되지 않습니다."
-                },
-                'keyboard': {
-                    'type': 'buttons',
-                    'buttons': [username, "다른계정"]
-                }
-            })
-        else:
-            return JsonResponse({
-                'message': {
-                    'text': username + "의 전적정보를 찾을 수 없습니다. 다른 닉네임을 입력해주세요."
-                },
-                'keyboard': {
-                    'type': 'text',
-                    'content': "닉네임을 입력해주세요."
-                }
-            })
-
     #유저명 있을 경우
     else:
         now  = datetime.now()
