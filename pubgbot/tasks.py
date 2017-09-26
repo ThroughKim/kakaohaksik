@@ -11,6 +11,7 @@ def get_user(username):
 
     if 'error' in user_info:
         create_log("no_user_error")
+        create_error_user("no_user_error")
     else:
         create_log(username)
         save_stats(username, user_info)
@@ -132,6 +133,11 @@ def save_stats(username, user_info):
             expose_sq_stat['RoundMostKills'],
             expose_sq_stat['LongestKill'],
         )
+
+def create_error_user(username):
+    Users.objects.create(
+        user_name=username
+    )
 
 
 def create_user_info(username, season):
