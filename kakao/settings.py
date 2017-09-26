@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dguhaksik',
     'pubgbot',
+    'djcelery',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -129,3 +130,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+import djcelery
+
+djcelery.setup_loader()
+BROKER_URL = "amqp://guest:guest@localhost:5672//"

@@ -1,14 +1,16 @@
 from django.conf.urls import url, include
 from django.contrib import admin
+from dguhaksik import views as dgu_views
+from pubgbot import views as pubg_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^keyboard/', 'dguhaksik.views.keyboard'),
-    url(r'^message', 'dguhaksik.views.answer'),
-    url(r'^crawl/', 'dguhaksik.views.crawl'),
-    url(r'^analysis/', 'dguhaksik.views.analysis'),
-    url(r'^lda/', 'dguhaksik.views.lda'),
-    url(r'^viewer/', 'dguhaksik.views.lda_view'),
-    url(r'^pubg/keyboard/', 'pubgbot.views.keyboard'),
-    url(r'^pubg/message', 'pubgbot.views.answer'),
+    url(r'^keyboard/', dgu_views.keyboard),
+    url(r'^message', dgu_views.answer),
+    url(r'^crawl/', dgu_views.crawl),
+    url(r'^analysis/', dgu_views.analysis),
+    url(r'^lda/', dgu_views.lda),
+    url(r'^viewer/', dgu_views.lda_view),
+    url(r'^pubg/keyboard/', pubg_views.keyboard),
+    url(r'^pubg/message', pubg_views.answer),
 ]
