@@ -53,7 +53,7 @@ def answer(request):
         time_gap = timedelta(hours=6)
         db_time = localtime(user_info.timestamp)
 
-        if db_time < now-time_gap:
+        if db_time > now-time_gap:
             tasks.get_user(username)
             return JsonResponse({
                 'message': {
