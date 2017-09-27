@@ -1,6 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from pubgbot.models import Users, SoloStats, DuoStats, SquadStats
+from pubgbot.models import Users, SoloStats, DuoStats, SquadStats, ErrorUser
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.timezone import localtime
@@ -37,20 +37,31 @@ def answer(request):
 
     #유저명 검색
     user_info = search_user_info(username)
-    # DB에 없는 유저정보
+    # 1분 내 저장된 유저가 없는 경우
     if not user_info:
-        tasks.get_user(username)
-        return JsonResponse({
-            'message': {
-                'text': "전적 정보 업데이트 중입니다. 잠시 후 다시 시도해주세요. \n"
-                        "존재하지 않는 계정의 경우 업데이트되지 않습니다."
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': [username, "다른계정"]
-            }
-        })
-    #유저명 있을 경우
+        # 에러 유저인지 검사
+        if username_has_error(username):
+            return JsonResponse({
+                'message': {
+                    'text': username + "의 전적정보를 찾을 수 없습니다."
+                },
+                'keyboard': {
+                    'type': 'text',
+                    'content': "닉네임을 입력해주세요."
+                }
+            })
+        else:
+            tasks.get_user(username)
+            return JsonResponse({
+                'message': {
+                    'text': "전적 정보 업데이트 중입니다. 잠시 후 다시 시도해주세요."
+                },
+                'keyboard': {
+                    'type': 'buttons',
+                    'buttons': [username, "다른계정"]
+                }
+            })
+    #유저가 있을 경우
     else:
         solo_stats = SoloStats.objects.filter(user_name=username).last()
         duo_stats = DuoStats.objects.filter(user_name=username).last()
@@ -90,6 +101,22 @@ def search_user_info(username):
         user_info = None
 
     return user_info
+
+
+def username_has_error(username):
+    now = datetime.now(pytz.timezone('Asia/Seoul'))
+    time_gap = timedelta(hours=6)
+    try:
+        error_user = ErrorUser.objects.filter(
+            user_name=username,
+            timestamp__gte=now-time_gap
+        ).last()
+        if error_user:
+            return True
+        else:
+            return False
+    except ObjectDoesNotExist:
+        return False
 
 
 def make_msg(type, stats):

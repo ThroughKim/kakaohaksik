@@ -61,3 +61,9 @@ class SquadStats(models.Model):
     damage_pg = models.CharField(max_length=30, default="")
     round_most_kills = models.CharField(max_length=30, default="")
     longest_kill = models.CharField(max_length=30, default="")
+
+
+class ErrorUser(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_name = models.CharField(max_length=100, default="")
+    timestamp = models.DateTimeField(auto_now_add=True)

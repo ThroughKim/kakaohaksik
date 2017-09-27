@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from celery import shared_task
 from pypubg import core
-from pubgbot.models import Log, Users, SoloStats, DuoStats, SquadStats
+from pubgbot.models import Log, Users, SoloStats, DuoStats, SquadStats, ErrorUser
 
 
 @shared_task
@@ -11,9 +11,15 @@ def get_user(username):
 
     if 'error' in user_info:
         create_log("no_user_error")
+        save_error(username)
     else:
         create_log(username)
         save_stats(username, user_info)
+
+def save_error(username):
+    ErrorUser.objects.create(
+        user_name=username
+    )
 
 
 def save_stats(username, user_info):
