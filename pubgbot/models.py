@@ -27,6 +27,7 @@ class SoloStats(models.Model):
     damage_pg = models.CharField(max_length=30, default="")
     round_most_kills = models.CharField(max_length=30, default="")
     longest_kill = models.CharField(max_length=30, default="")
+    percentile = models.CharField(max_length=30, default="")
 
 class DuoStats(models.Model):
     id = models.AutoField(primary_key=True)
@@ -44,6 +45,7 @@ class DuoStats(models.Model):
     damage_pg = models.CharField(max_length=30, default="")
     round_most_kills = models.CharField(max_length=30, default="")
     longest_kill = models.CharField(max_length=30, default="")
+    percentile = models.CharField(max_length=30, default="")
 
 class SquadStats(models.Model):
     id = models.AutoField(primary_key=True)
@@ -61,6 +63,7 @@ class SquadStats(models.Model):
     damage_pg = models.CharField(max_length=30, default="")
     round_most_kills = models.CharField(max_length=30, default="")
     longest_kill = models.CharField(max_length=30, default="")
+    percentile = models.CharField(max_length=30, default="")
 
 
 class ErrorUser(models.Model):

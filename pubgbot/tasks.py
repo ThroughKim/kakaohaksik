@@ -64,7 +64,14 @@ def save_stats(username, user_info):
         if label in exposure_list:
             expose_sol_stat[label] = val
             if label == "Rating":
-                expose_sol_stat["BestRank"] = item['rank']
+                if type(item['rank']) is int:
+                    expose_sol_stat["BestRank"] = format(item['rank'], ',')
+                else:
+                    expose_sol_stat["BestRank"] = '_'
+                if item['percentile'] is not None:
+                    expose_sol_stat["Percentile"] = item['percentile']
+                else:
+                    expose_sol_stat["Percentile"] = '_'
     for item in duo_stats:
         label = item['field']
         val = item['displayValue']
@@ -72,7 +79,14 @@ def save_stats(username, user_info):
         if label in exposure_list:
             expose_duo_stat[label] = val
             if label == "Rating":
-                expose_duo_stat["BestRank"] = item['rank']
+                if type(item['rank']) is int:
+                    expose_duo_stat["BestRank"] = format(item['rank'], ',')
+                else:
+                    expose_duo_stat["BestRank"] = '_'
+                if item['percentile'] is not None:
+                    expose_duo_stat["Percentile"] = item['percentile']
+                else:
+                    expose_duo_stat["Percentile"] = '_'
 
     for item in sq_stats:
         label = item['field']
@@ -81,7 +95,14 @@ def save_stats(username, user_info):
         if label in exposure_list:
             expose_sq_stat[label] = val
             if label == "Rating":
-                expose_sq_stat["BestRank"] = item['rank']
+                if type(item['rank']) is int:
+                    expose_sq_stat["BestRank"] = format(item['rank'], ',')
+                else:
+                    expose_sq_stat["BestRank"] = '_'
+                if item['percentile'] is not None:
+                    expose_sq_stat["Percentile"] = item['percentile']
+                else:
+                    expose_sq_stat["Percentile"] = '_'
 
     if len(expose_sol_stat) == 0:
         create_empty_stat(username, "solo")
@@ -101,6 +122,7 @@ def save_stats(username, user_info):
             expose_sol_stat['DamagePg'],
             expose_sol_stat['RoundMostKills'],
             expose_sol_stat['LongestKill'],
+            expose_sol_stat['Percentile']
         )
 
     if len(expose_duo_stat) == 0:
@@ -121,6 +143,7 @@ def save_stats(username, user_info):
             expose_duo_stat['DamagePg'],
             expose_duo_stat['RoundMostKills'],
             expose_duo_stat['LongestKill'],
+            expose_duo_stat['Percentile']
         )
 
     if len(expose_sq_stat) == 0:
@@ -141,13 +164,16 @@ def save_stats(username, user_info):
             expose_sq_stat['DamagePg'],
             expose_sq_stat['RoundMostKills'],
             expose_sq_stat['LongestKill'],
+            expose_sq_stat["Percentile"]
         )
 
 
 def create_user_info(username, season):
     Users.objects.update_or_create(
         user_name=username,
-        season=season
+        defaults={
+            'season':season
+        }
     )
 
 
@@ -155,69 +181,84 @@ def create_empty_stat(username, match_type):
     if match_type == "solo":
         SoloStats.objects.update_or_create(
             user_name=username,
-            rounds_played=0
+            defaults={
+                'rounds_played':0
+            }
         )
     elif match_type == "duo":
         DuoStats.objects.update_or_create(
             user_name=username,
-            rounds_played=0
+            defaults={
+                'rounds_played': 0
+            }
         )
     elif match_type == "squad":
         SquadStats.objects.update_or_create(
             user_name=username,
-            rounds_played=0
+            defaults={
+                'rounds_played': 0
+            }
         )
 
 
 def create_stat_table(username, match_type, rounds_played, rating, best_rating, best_rank, win_ratio, wins,
-                      top_10_ratio, kill_death_ratio, kills_pg, damage_pg, round_most_kills, longest_kill):
+                      top_10_ratio, kill_death_ratio, kills_pg, damage_pg, round_most_kills, longest_kill, percentile):
     if match_type == "solo":
         SoloStats.objects.update_or_create(
             user_name=username,
-            rounds_played=rounds_played,
-            rating=rating,
-            best_rating=best_rating,
-            best_rank=best_rank,
-            win_ratio=win_ratio,
-            wins=wins,
-            top_10_ratio=top_10_ratio,
-            kill_death_ratio=kill_death_ratio,
-            kills_pg=kills_pg,
-            damage_pg=damage_pg,
-            round_most_kills=round_most_kills,
-            longest_kill=longest_kill
+            defaults={
+                'rounds_played': rounds_played,
+                'rating': rating,
+                'best_rating': best_rating,
+                'best_rank': best_rank,
+                'win_ratio': win_ratio,
+                'wins': wins,
+                'top_10_ratio': top_10_ratio,
+                'kill_death_ratio': kill_death_ratio,
+                'kills_pg': kills_pg,
+                'damage_pg': damage_pg,
+                'round_most_kills': round_most_kills,
+                'longest_kill': longest_kill,
+                'percentile': percentile,
+            }
         )
     elif match_type == "duo":
         DuoStats.objects.update_or_create(
             user_name=username,
-            rounds_played=rounds_played,
-            rating=rating,
-            best_rating=best_rating,
-            best_rank=best_rank,
-            win_ratio=win_ratio,
-            wins=wins,
-            top_10_ratio=top_10_ratio,
-            kill_death_ratio=kill_death_ratio,
-            kills_pg=kills_pg,
-            damage_pg=damage_pg,
-            round_most_kills=round_most_kills,
-            longest_kill=longest_kill
+            defaults={
+                'rounds_played': rounds_played,
+                'rating': rating,
+                'best_rating': best_rating,
+                'best_rank': best_rank,
+                'win_ratio': win_ratio,
+                'wins': wins,
+                'top_10_ratio': top_10_ratio,
+                'kill_death_ratio': kill_death_ratio,
+                'kills_pg': kills_pg,
+                'damage_pg': damage_pg,
+                'round_most_kills': round_most_kills,
+                'longest_kill': longest_kill,
+                'percentile': percentile,
+            }
         )
     elif match_type == "squad":
         SquadStats.objects.update_or_create(
             user_name=username,
-            rounds_played=rounds_played,
-            rating=rating,
-            best_rating=best_rating,
-            best_rank=best_rank,
-            win_ratio=win_ratio,
-            wins=wins,
-            top_10_ratio=top_10_ratio,
-            kill_death_ratio=kill_death_ratio,
-            kills_pg=kills_pg,
-            damage_pg=damage_pg,
-            round_most_kills=round_most_kills,
-            longest_kill=longest_kill
+            defaults={
+                'rounds_played': rounds_played,
+                'rating': rating,
+                'best_rating': best_rating,
+                'best_rank': best_rank,
+                'win_ratio': win_ratio,
+                'wins': wins,
+                'top_10_ratio': top_10_ratio,
+                'kill_death_ratio': kill_death_ratio,
+                'kills_pg': kills_pg,
+                'damage_pg': damage_pg,
+                'round_most_kills': round_most_kills,
+                'longest_kill': longest_kill,
+                'percentile': percentile,
+            }
         )
 
 def create_log(nickname):

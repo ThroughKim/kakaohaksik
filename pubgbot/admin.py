@@ -9,15 +9,15 @@ class UserAdmin(admin.ModelAdmin):
 
 class SoloAdmin(admin.ModelAdmin):
     list_display = ['id', 'user_name', 'timestamp', 'rounds_played', 'rating', 'best_rank', 'win_ratio', 'top_10_ratio',
-                    'kill_death_ratio', 'kills_pg', 'damage_pg', 'round_most_kills']
+                    'kill_death_ratio', 'kills_pg', 'damage_pg', 'round_most_kills', 'percentile']
 
 class DuoAdmin(admin.ModelAdmin):
     list_display = ['id', 'user_name', 'timestamp', 'rounds_played', 'rating', 'best_rank', 'win_ratio', 'top_10_ratio',
-                    'kill_death_ratio', 'kills_pg', 'damage_pg', 'round_most_kills']
+                    'kill_death_ratio', 'kills_pg', 'damage_pg', 'round_most_kills', 'percentile']
 
 class SquadAdmin(admin.ModelAdmin):
     list_display = ['id', 'user_name', 'timestamp', 'rounds_played', 'rating', 'best_rank', 'win_ratio', 'top_10_ratio',
-                    'kill_death_ratio', 'kills_pg', 'damage_pg', 'round_most_kills']
+                    'kill_death_ratio', 'kills_pg', 'damage_pg', 'round_most_kills', 'percentile']
 
 class ErrorAdmin(admin.ModelAdmin):
     list_display = ['id', 'user_name', 'timestamp']

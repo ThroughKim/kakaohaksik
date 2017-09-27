@@ -23,8 +23,6 @@ def answer(request):
     received_json_data = json.loads(json_str)
     username = received_json_data['content']
 
-    tasks.get_user(username)
-
     if username == "다른계정":
         return JsonResponse({
             'message': {
@@ -126,7 +124,7 @@ def make_msg(type, stats):
     else:
         msg = type + ' ' + stats.rounds_played + '게임 \n\n'
         msg += '레이팅: ' + stats.rating + ' (최고 '+ stats.best_rating +') \n'
-        msg += '순위   : ' + stats.best_rank + '위\n'
+        msg += '순위   : ' + stats.best_rank + '위 (상위 '+ stats.percentile +'%) \n'
         msg += '승률   : ' + stats.win_ratio + ' (치킨 ' + stats.wins + '마리) \n'
         msg += '탑텐   : '+ stats.top_10_ratio +'\n'
         msg += '킬뎃   : ' + stats.kill_death_ratio + '\n'
