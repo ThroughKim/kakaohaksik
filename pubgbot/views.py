@@ -23,6 +23,8 @@ def answer(request):
     received_json_data = json.loads(json_str)
     username = received_json_data['content']
 
+    tasks.get_user(username)
+
     if username == "다른계정":
         return JsonResponse({
             'message': {

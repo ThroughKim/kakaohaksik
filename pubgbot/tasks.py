@@ -28,7 +28,6 @@ def save_stats(username, user_info):
         "RoundsPlayed",
         "Rating",
         "BestRating",
-        "BestRank",
         "WinRatio",
         "Wins",
         "Top10Ratio",
@@ -64,13 +63,16 @@ def save_stats(username, user_info):
 
         if label in exposure_list:
             expose_sol_stat[label] = val
-
+            if label == "Rating":
+                expose_sol_stat["BestRank"] = item['rank']
     for item in duo_stats:
         label = item['field']
         val = item['displayValue']
 
         if label in exposure_list:
             expose_duo_stat[label] = val
+            if label == "Rating":
+                expose_duo_stat["BestRank"] = item['rank']
 
     for item in sq_stats:
         label = item['field']
@@ -78,6 +80,8 @@ def save_stats(username, user_info):
 
         if label in exposure_list:
             expose_sq_stat[label] = val
+            if label == "Rating":
+                expose_sq_stat["BestRank"] = item['rank']
 
     if len(expose_sol_stat) == 0:
         create_empty_stat(username, "solo")
