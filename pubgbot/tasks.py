@@ -17,7 +17,7 @@ def get_user(username):
         save_stats(username, user_info)
 
 def save_error(username):
-    ErrorUser.objects.create(
+    ErrorUser.objects.update_or_create(
         user_name=username
     )
 
@@ -141,7 +141,7 @@ def save_stats(username, user_info):
 
 
 def create_user_info(username, season):
-    Users.objects.create(
+    Users.objects.update_or_create(
         user_name=username,
         season=season
     )
@@ -149,17 +149,17 @@ def create_user_info(username, season):
 
 def create_empty_stat(username, match_type):
     if match_type == "solo":
-        SoloStats.objects.create(
+        SoloStats.objects.update_or_create(
             user_name=username,
             rounds_played=0
         )
     elif match_type == "duo":
-        DuoStats.objects.create(
+        DuoStats.objects.update_or_create(
             user_name=username,
             rounds_played=0
         )
     elif match_type == "squad":
-        SquadStats.objects.create(
+        SquadStats.objects.update_or_create(
             user_name=username,
             rounds_played=0
         )
@@ -168,7 +168,7 @@ def create_empty_stat(username, match_type):
 def create_stat_table(username, match_type, rounds_played, rating, best_rating, best_rank, win_ratio, wins,
                       top_10_ratio, kill_death_ratio, kills_pg, damage_pg, round_most_kills, longest_kill):
     if match_type == "solo":
-        SoloStats.objects.create(
+        SoloStats.objects.update_or_create(
             user_name=username,
             rounds_played=rounds_played,
             rating=rating,
@@ -184,7 +184,7 @@ def create_stat_table(username, match_type, rounds_played, rating, best_rating, 
             longest_kill=longest_kill
         )
     elif match_type == "duo":
-        DuoStats.objects.create(
+        DuoStats.objects.update_or_create(
             user_name=username,
             rounds_played=rounds_played,
             rating=rating,
@@ -200,7 +200,7 @@ def create_stat_table(username, match_type, rounds_played, rating, best_rating, 
             longest_kill=longest_kill
         )
     elif match_type == "squad":
-        SquadStats.objects.create(
+        SquadStats.objects.update_or_create(
             user_name=username,
             rounds_played=rounds_played,
             rating=rating,

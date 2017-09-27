@@ -8,13 +8,13 @@ class Log(models.Model):
 class Users(models.Model):
     id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=100, default="")
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now=True)
     season = models.CharField(max_length=50, default="")
 
 class SoloStats(models.Model):
     id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=100, default="")
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now=True)
     rounds_played = models.CharField(max_length=30, default="")
     rating = models.CharField(max_length=30, default="")
     best_rating = models.CharField(max_length=30, default="")
@@ -31,7 +31,7 @@ class SoloStats(models.Model):
 class DuoStats(models.Model):
     id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=100, default="")
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now=True)
     rounds_played = models.CharField(max_length=30, default="")
     rating = models.CharField(max_length=30, default="")
     best_rating = models.CharField(max_length=30, default="")
@@ -48,7 +48,7 @@ class DuoStats(models.Model):
 class SquadStats(models.Model):
     id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=100, default="")
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now=True)
     rounds_played = models.CharField(max_length=30, default="")
     rating = models.CharField(max_length=30, default="")
     best_rating = models.CharField(max_length=30, default="")
@@ -66,4 +66,4 @@ class SquadStats(models.Model):
 class ErrorUser(models.Model):
     id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=100, default="")
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now=True)

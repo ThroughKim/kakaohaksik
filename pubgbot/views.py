@@ -3,7 +3,6 @@ from django.http import JsonResponse
 from pubgbot.models import Users, SoloStats, DuoStats, SquadStats, ErrorUser
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.timezone import localtime
 import pubgbot.tasks as tasks
 import pytz
 import json
@@ -138,3 +137,4 @@ def make_msg(type, stats):
 
 
 # curl -XPOST 'http://127.0.0.1:8000/pubg/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "GCrider"}'
+# curl -XPOST 'http://127.0.0.1:5555/pubg/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "GCrider"}'
