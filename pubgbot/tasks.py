@@ -17,9 +17,10 @@ def get_user(username):
         save_stats(username, user_info)
 
 def save_error(username):
-    ErrorUser.objects.update_or_create(
-        user_name=username
-    )
+	print(username)
+#    ErrorUser.objects.update_or_create(
+#       user_name=username
+#    )
 
 
 def save_stats(username, user_info):
