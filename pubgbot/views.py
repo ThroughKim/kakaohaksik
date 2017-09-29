@@ -136,5 +136,5 @@ def make_msg(type, stats):
     return msg
 
 
-# curl -XPOST 'http://127.0.0.1:8000/pubg/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "GCrider"}'
+# 1
 # curl -XPOST 'http://127.0.0.1:5555/pubg/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "GCrider"}'
