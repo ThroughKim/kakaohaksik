@@ -75,6 +75,10 @@ def answer(request):
             sending_msg = "⭐턱별회원 린치클럽 에이스 스트리머 ⭐갓갓갓모리⭐님의 " + user_info.season + " 시즌 전적 \n\n"
         elif username.lower() == 'jrae3391':
             sending_msg = "⭐핵고수 밀베왕 학교일진 강남조폭 여포갑 ⭐케챱도둑⭐님의 " + user_info.season + " 시즌 전적 \n\n"
+        elif username.lower() == 'virginbreakor':
+            sending_msg = "🐔개트롤 🐔짭무새 🐔호쌍새 🐔VirginbreaKOR 님의 " + user_info.season + " 시즌 전적 \n\n"
+        elif username.lower() == 'fixandy':
+            sending_msg = "🙏간디🙏 🏠기획부동산 마스터🏠 앤디초 Fixandy 님의 " + user_info.season + " 시즌 전적 \n\n"
         sending_msg += solo_msg + duo_msg + squad_msg
 
         return JsonResponse({
