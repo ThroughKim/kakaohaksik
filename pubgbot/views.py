@@ -1,6 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from pubgbot.models import Users, SoloStats, DuoStats, SquadStats, ErrorUser
+from pubgbot.models import Users, SoloStats, DuoStats, SquadStats, ErrorUser, Log
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 import pubgbot.tasks as tasks
@@ -36,6 +36,9 @@ def answer(request):
             }
         })
     else:
+        Log.objects.create(
+            nickname=username + "-temp"
+        )
         solo_stats = SoloStats.objects.filter(user_name=username).last()
         duo_stats = DuoStats.objects.filter(user_name=username).last()
         squad_stats = SquadStats.objects.filter(user_name=username).last()
