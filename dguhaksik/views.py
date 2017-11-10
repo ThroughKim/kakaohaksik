@@ -19,6 +19,7 @@ def keyboard(request):
         'buttons' : button_list
     })
 
+
 @csrf_exempt
 def answer(request):
     json_str = ((request.body).decode('utf-8'))
@@ -32,74 +33,39 @@ def answer(request):
         hour_now = datetime.datetime.now().hour
 
         if hour_now >= 15:
-            return JsonResponse({
-                'message':{
-                    'text': today_date + '의 ' + cafeteria_name + '의 저녁메뉴 입니다. \n \n' + get_dinner_menu(cafeteria_name)
-                },
-                'keyboard': {
-                    'type': 'buttons',
-                    'buttons': button_list
-                }
-            })
+            message = today_date + '의 ' + cafeteria_name + '의 저녁메뉴 입니다. \n \n' + get_dinner_menu(cafeteria_name)
+            return make_json_response(message)
 
         else :
-            return JsonResponse({
-                'message': {
-                    'text': today_date + '의 ' + cafeteria_name + '의 점심 메뉴입니다. \n \n' + get_lunch_menu(cafeteria_name)
-                },
-                'keyboard': {
-                    'type': 'buttons',
-                    'buttons': button_list
-                }
-            })
-    elif cafeteria_name == "뭐먹지?":
-        hour_now = datetime.datetime.now().hour
+            message = today_date + '의 ' + cafeteria_name + '의 점심 메뉴입니다. \n \n' + get_lunch_menu(cafeteria_name)
+            return make_json_response(message)
 
+    elif cafeteria_name == "뭐먹지?":
+
+        hour_now = datetime.datetime.now().hour
         if hour_now >= 15:
-            return JsonResponse({
-                'message': {
-                    'text': '저녁 식사로 다음 메뉴 어떠세요? \n \n' + get_random_menu("dinner")
-                },
-                'keyboard': {
-                    'type': 'buttons',
-                    'buttons': button_list
-                }
-            })
+            message = '저녁 식사로 다음 메뉴 어떠세요? \n \n' + get_random_menu("dinner")
+            return make_json_response(message)
+
         else:
-            return JsonResponse({
-                'message': {
-                    'text': '점심 식사로 다음 메뉴 어떠세요? \n \n' + get_random_menu("launch")
-                },
-                'keyboard': {
-                    'type': 'buttons',
-                    'buttons': button_list
-                }
-            })
+            message = '점심 식사로 다음 메뉴 어떠세요? \n \n' + get_random_menu("launch")
+            return make_json_response(message)
 
     else:
-        return JsonResponse({
-            'message': {
-                'text': 'http://dgucoop.dongguk.edu/mobile/shop.html?code=1'
-            },
-            'keyboard': {
-                'type': 'buttons',
-                'buttons': button_list
-            }
-        })
+        message = 'http://dgucoop.dongguk.edu/mobile/shop.html?code=1'
+        return make_json_response(message)
 
 
-def lda(request):
-    context = {}
-
-    return TemplateResponse(request, 'lda.html', context=context)
-
-def lda_view(request):
-    set = request.GET['set']
-
-    context = {}
-    context['set'] = set
-
-    return TemplateResponse(request, 'lda_view.html', context=context)
+def make_json_response(message_text):
+    return JsonResponse({
+        'message': {
+            'text': message_text
+        },
+        'keyboard': {
+            'type': 'buttons',
+            'buttons': button_list
+        }
+    })
 
 
 def get_lunch_menu(cafeteria_name):
@@ -426,7 +392,7 @@ def flush_menu_db():
     menu_db.delete()
 
 
-#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "뭐먹지?"}'
+#curl -XPOST 'http://127.0.0.1:8000/message' -d '{"user_key": "encryptedUserKey", "type": "text", "content": "상록원"}'
 #curl -XGET 'http://127.0.0.1:8000/crawl/'
 
 
@@ -605,3 +571,18 @@ def get_time_request_data():
         cnt_lunch=cnt_lunch,
         cnt_dinner=cnt_dinner
     )
+
+
+def lda(request):
+    context = {}
+
+    return TemplateResponse(request, 'lda.html', context=context)
+
+
+def lda_view(request):
+    set = request.GET['set']
+
+    context = {}
+    context['set'] = set
+
+    return TemplateResponse(request, 'lda_view.html', context=context)
