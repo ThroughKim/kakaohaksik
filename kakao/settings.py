@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'dguhaksik',
     'pubgbot',
     'djcelery',
+    'dossa',
 ]
 
 MIDDLEWARE_CLASSES = [
