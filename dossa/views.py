@@ -9,14 +9,28 @@ from django.conf import settings
 
 def noti(request):
 
-    posts = get_post()
+    urls = [
+        'http://corearoadbike.com/board/board.php?t_id=Menu30Top6&category=%ED%8C%90%EB%A7%A4',
+        'http://corearoadbike.com/board/board.php?t_id=Menu01Top6&category=%ED%8C%90%EB%A7%A4'
+    ]
+
+    keywords = [
+        '파스포츠', '튜블리스', 'slr0', '튜브리스',
+        'm/l', '56', '56', '55'
+    ]
+
+    posts = []
+    for url in urls:
+        posts.append(get_post(url))
 
     new_posts = []
 
     for post in reversed(posts):
         saved_post, created = Post.objects.update_or_create(title=post["title"], link=post['link'])
         if created:
-            new_posts.append(post)
+            for word in keywords:
+                if word in post["title"]:
+                    new_posts.append(post)
 
     if len(new_posts) > 0:
         send_mail(new_posts)
@@ -28,8 +42,8 @@ def noti(request):
     })
 
 
-def get_post():
-    html = urlopen('http://corearoadbike.com/board/board.php?t_id=Menu31Top6&category=%ED%8C%90%EB%A7%A4')
+def get_post(url):
+    html = urlopen(url)
     source = html.read()
     html.close()
     soup = BeautifulSoup(source, "html.parser", from_encoding='utf-8')
