@@ -21,7 +21,9 @@ def noti(request):
 
     posts = []
     for url in urls:
-        posts.append(get_post(url))
+        post_list = get_post(url)
+        for post in post_list:
+            posts.append(post)
 
     new_posts = []
 
