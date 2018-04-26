@@ -60,7 +60,7 @@ def send_mail(new_posts):
     for post in new_posts:
         text += post['title'] + "- " + post['link'] + "\n"
 
-    mail_addr = 'sulewoo58@gmail.com'
+    mail_addr = 'jsjsv@naver.com'
     msg = MIMEText(text)
 
     # me == 보내는 사람의 이메일 주소
