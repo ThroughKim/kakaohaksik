@@ -3,6 +3,7 @@ from django.contrib import admin
 from dguhaksik import views as dgu_views
 from pubgbot import views as pubg_views
 from dossa import views as dossa_views
+from dcbg import views as dcbg_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -15,4 +16,6 @@ urlpatterns = [
     url(r'^pubg/keyboard/', pubg_views.keyboard),
     url(r'^pubg/message', pubg_views.answer),
     url(r'^dossa/', dossa_views.noti),
+    url(r'^dcbg/analysis', dcbg_views.analysis),
+    url(r'^dcbg/crawl', dcbg_views.crawl),
 ]
