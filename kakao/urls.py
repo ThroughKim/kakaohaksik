@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^pubg/message', pubg_views.answer),
     url(r'^dossa/', dossa_views.noti),
     url(r'^dcbg/analysis', dcbg_views.analysis),
-    url(r'^dcbg/crawl', dcbg_views.crawl),
+    # url(r'^dcbg/crawl', dcbg_views.crawl),
     url(r'^dcbg/get_word_data/', dcbg_views.get_word_data),
 ]
