@@ -1,10 +1,200 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Load jQuery -->
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <meta charset="UTF-8">
-    <title>ANALYSIS</title>
+    <title>채팅방 분석</title>
+
+    <!-- 메인 CSS 링크 -->
+    <link href="{% static 'main.css' %}" rel="stylesheet">
+    <!-- Load c3.css -->
+    <link href="{% static 'bower_components/c3/c3.css' %}" rel="stylesheet" type="text/css">
+    <!-- Load d3.js and c3.js -->
+    <script src="{% static 'bower_components/d3/d3.min.js' %}" charset="utf-8"></script>
+    <script src="{% static 'bower_components/c3/c3.min.js' %}"></script>
 </head>
 <body>
+<div class="top-bar">
+    <div class="top-menu-title">
+        채팅방 분석
+    </div>
+</div>
+
+<div class="main-contents-container">
+    <div class="main-contents">
+        <div class="label">
+            대화방 지분
+       </div>
+        <div id="talker-chart"></div>
+    </div>
+</div>
+
+
+<div class="main-contents-container">
+    <div class="main-contents">
+        <div class="label">
+            지정단어
+       </div>
+        <form id="word_search">
+            <input type="text" id="q_word" placeholder="검색할 단어 입력" />
+            <input type="submit" />
+        </form>
+        <div id="word-chart"></div>
+    </div>
+</div>
+
+<div class="main-contents-container">
+    <div class="main-contents">
+        <div class="label">
+            팀 고마
+       </div>
+        <div id="goma-chart"></div>
+    </div>
+</div>
+
+<div class="main-contents-container">
+    <div class="main-contents">
+        <div class="label">
+            섹무새
+       </div>
+        <div id="sex-chart"></div>
+    </div>
+</div>
+
+<div class="main-contents-container">
+    <div class="main-contents">
+        <div class="label">
+            사진봇
+       </div>
+        <div id="pic-chart"></div>
+    </div>
+</div>
+
+<div class="main-contents-container">
+    <div class="main-contents">
+        <div class="label">
+            배그봇
+       </div>
+        <div id="pubg-chart"></div>
+    </div>
+</div>
 
 </body>
+<script type="text/javascript">
+$(document).ready( function () {
+    var talker_chart = c3.generate({
+        bindto: '#talker-chart',
+        data: {
+            columns: [
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 1
+            }
+        }
+    });
+    talker_chart.load({
+        columns: {{ talker_data|safe }}
+    })
+
+    var goma_chart = c3.generate({
+        bindto: '#goma-chart',
+        data: {
+            columns: [
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 1
+            }
+        }
+    });
+    goma_chart.load({
+        columns: {{ goma_data|safe }}
+    })
+
+    var sex_chart = c3.generate({
+        bindto: '#sex-chart',
+        data: {
+            columns: [
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 1
+            }
+        }
+    });
+    sex_chart.load({
+        columns: {{ sex_data|safe }}
+    })
+
+    var pic_chart = c3.generate({
+        bindto: '#pic-chart',
+        data: {
+            columns: [
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 1
+            }
+        }
+    });
+    pic_chart.load({
+        columns: {{ pic_data|safe }}
+    })
+
+    var pubg_chart = c3.generate({
+        bindto: '#pubg-chart',
+        data: {
+            columns: [
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 1
+            }
+        }
+    });
+    pubg_chart.load({
+        columns: {{ pubg_data|safe }}
+    })
+
+
+    $("#word_search").submit(function(e) {
+        var q = $("#q_word").val()
+        $.ajax({
+            type: "POST",
+            url: '/dcbg/get_word_data/',
+            data: {'word': q},
+            success: function(data) {
+                var word_chart = c3.generate({
+                    bindto: '#word-chart',
+                    data: {
+                        columns: data,
+                        type: 'bar'
+                    },
+                    bar: {
+                        width: {
+                            ratio: 1
+                        }
+                    }
+                });
+            }
+        })
+        e.preventDefault()
+    })
+
+
+});
+</script>
 </html>
