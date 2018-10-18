@@ -397,15 +397,17 @@ def flush_menu_db():
 
 
 def analysis(request):
+    
+    logs = Log.objects
 
     context = {}
     context['date_pack'] = get_date_pack()
-    context['total_request_data'] = get_total_request_data()
-    context['seven_days_request_data'] = get_seven_days_request_data()
-    context['request_data_by_cafe'] = get_request_data_by_cafe()
-    context['weekday_request_data'] = get_weekday_request_data()
-    context['hourly_request_data'] = get_hourly_request_data()
-    context['request_by_time_data'] = get_time_request_data()
+    context['total_request_data'] = get_total_request_data(logs)
+    context['seven_days_request_data'] = get_seven_days_request_data(logs)
+    context['request_data_by_cafe'] = get_request_data_by_cafe(logs)
+    context['weekday_request_data'] = get_weekday_request_data(logs)
+    context['hourly_request_data'] = get_hourly_request_data(logs)
+    context['request_by_time_data'] = get_time_request_data(logs)
 
     return TemplateResponse(request, "index.html", context)
 
@@ -429,15 +431,15 @@ def get_date_pack():
     return date_pack
 
 
-def get_total_request_data():
+def get_total_request_data(logs):
     today_date = get_today_date()
-    days_since_open = (today_date - datetime.date(2017, 9, 1)).days
+    days_since_open = (today_date - datetime.date(2018, 9, 1)).days
     zero_data = ['요청횟수']
     total_request_data = ['요청횟수']
 
     for i in reversed(range(days_since_open)):
         total_request_data.append(
-            Log.objects.filter(
+            logs.filter(
                 timestamp__range=[today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i)]
             ).count()
@@ -450,14 +452,14 @@ def get_total_request_data():
     )
 
 
-def get_seven_days_request_data():
+def get_seven_days_request_data(logs):
     days = 7
     today_date = get_today_date()
     cnt_request = ['요청횟수']
 
     for i in reversed(range(days)):
         cnt_request.append(
-            Log.objects.filter(
+            logs.filter(
                 timestamp__range = (today_date - datetime.timedelta(days=i),
                                     today_date + datetime.timedelta(days=1-i))
             ).count()
@@ -466,7 +468,7 @@ def get_seven_days_request_data():
     return cnt_request
 
 
-def get_request_data_by_cafe():
+def get_request_data_by_cafe(logs):
     days = 7
     today_date = get_today_date()
     cnt_sang = ['상록원']
@@ -477,35 +479,35 @@ def get_request_data_by_cafe():
 
     for i in reversed(range(days)):
         cnt_sang.append(
-            Log.objects.filter(
+            logs.filter(
                 cafe_name='상록원',
                 timestamp__range=(today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
         cnt_gru.append(
-            Log.objects.filter(
+            logs.filter(
                 cafe_name='그루터기',
                 timestamp__range=(today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
         cnt_dorm.append(
-            Log.objects.filter(
+            logs.filter(
                 cafe_name='기숙사식당',
                 timestamp__range=(today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
         cnt_kyo.append(
-            Log.objects.filter(
+            logs.filter(
                 cafe_name='교직원식당',
                 timestamp__range=(today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i))
             ).count()
         )
         cnt_rand.append(
-            Log.objects.filter(
+            logs.filter(
                 cafe_name__contains='rand',
                 timestamp__range=(today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i))
@@ -521,11 +523,11 @@ def get_request_data_by_cafe():
     )
 
 
-def get_weekday_request_data():
+def get_weekday_request_data(logs):
     weekday_request_data = ['요청횟수']
     for i in range(1,8):
         weekday_request_data.append(
-            Log.objects.filter(
+            logs.filter(
                 timestamp__week_day=i
             ).count()
         )
@@ -533,11 +535,11 @@ def get_weekday_request_data():
     return weekday_request_data
 
 
-def get_hourly_request_data():
+def get_hourly_request_data(logs):
     hourly_request_data = ['요청횟수']
     for i in range(24):
         hourly_request_data.append(
-            Log.objects.filter(
+            logs.filter(
                 timestamp__hour=i
             ).count()
         )
@@ -545,7 +547,7 @@ def get_hourly_request_data():
     return hourly_request_data
 
 
-def get_time_request_data():
+def get_time_request_data(logs):
     days=7
     today_date = get_today_date()
     cnt_lunch = ['중식']
@@ -553,14 +555,14 @@ def get_time_request_data():
 
     for i in reversed(range(days)):
         cnt_lunch.append(
-            Log.objects.filter(
+            logs.filter(
                 timestamp__range=(today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i)),
                 timestamp__hour__lt = 15
             ).count()
         )
         cnt_dinner.append(
-            Log.objects.filter(
+            logs.filter(
                 timestamp__range=(today_date - datetime.timedelta(days=i),
                                   today_date + datetime.timedelta(days=1 - i)),
                 timestamp__hour__gte=15
